@@ -29,11 +29,7 @@ module.exports = function(grunt) {
         src: 'src/modules/*.js',
         dest: 'static/builtin_modules.txt',
         options: {
-          separator: '\n%%%%%%%%%%%%! MODULE SEPARATOR !%%%%%%%%%%%%\n',
-          process: function(src, filepath) {
-            var filename = path.basename(filepath, '.js');
-            return "//~module: " + filename + "\n" + src;
-          }
+          separator: '\n%%%%%%%%%%%%! MODULE SEPARATOR !%%%%%%%%%%%%\n'
         }
       }
     },

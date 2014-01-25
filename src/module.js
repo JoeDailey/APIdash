@@ -1,9 +1,30 @@
 
-// 192.168.43.65:9001
-
-var Connection = function(from, to) {
-    this.from  = from;
+var Connection = function(from, fromName, to, toName) {
+    this.from = from;
     this.to = to;
+    this.fromName = fromName;
+    this.toName = toName;
+    from.outputs[fromName] = this;
+    to.inputs[toName] = this;
+
+    this.val = null;
+};
+
+Connection.prototype.remove = function() {
+    this.from.outputs[this.fromName] = null;
+    this.to.inputs[this.toName] = null;
+};
+
+Connection.prototype.hasValue = function() {
+    return this.val != null;
+};
+
+Connection.prototype.setVal = function(val) {
+    this.val = val;
+};
+
+Connection.prototype.getValue = function() {
+    return this.val;
 };
 
 var Module = function() {
@@ -19,11 +40,45 @@ var Module = function() {
 
     this.func = null;
     this.source = "";
+
+    this.onChange = function() {};
+
+    this.fired = false;
+};
+
+Module.prototype.input = function(key) {
+    return this.inputs[key].val;
+};
+
+Module.prototype.send = function(output, data) {
+    this.outputs[output].setVal(data);
+};
+
+Module.prototype.hasValidInputs = function() {
+    var self = this;
+    return _.every(this.inputs, function(conn) {
+        return conn.hasValue();
+    });
+};
+
+Module.prototype.run = function() {
+    this.func();
 };
 
 Module.prototype.config = function(obj) {
     var self = this;
     self.name = obj.name;
+
+    obj.inputs = obj.inputs || [];
+    obj.outputs = obj.outputs || [];
+
+    if (!_.isArray(obj.inputs)) obj.inputs = [obj.inputs];
+    if (!_.isArray(obj.outputs)) obj.outputs = [obj.outputs];
+
+    if (JSON.stringify(obj.inputs)==JSON.stringify(self.inputList) &&
+        JSON.stringify(obj.outputs)==JSON.stringify(self.outputList))
+        return;
+
     _.each(obj.inputs, function(inp) {
         self.inputs[inp] = null;
     });
@@ -45,37 +100,59 @@ Module.prototype.input = function(name) {
     return this.inputs[name].getValue();
 };
 
-var ModuleFactory = function(source, name) {
-    this.source = source;
-    this.name = name || 'module';
+Module.prototype.compile = function() {
+    var script = "with (scope) {\n" + this.source + "\n}";
+    script = Function('scope', script);
 
-    var script = "with (scope) {\n" + source + "\n}";
+    var oldInputs = this.inputList,
+        oldOutputs = this.outputList;
 
-    try {
-        this.scriptFunc = Function('scope', script);
-    } catch (err) {
-        console.log("Error in module " + this.name);
-        throw err;
-    };
-};
-
-ModuleFactory.prototype.create = function() {
-    var mod = new Module;
-    mod.source = this.source;
-    this.scriptFunc({
-        'module': mod,
+    script({
+        'module': this,
         'utils': ModuleUtils
     });
+
+    if (JSON.stringify(oldInputs)!=JSON.stringify(this.inputList) ||
+        JSON.stringify(oldOutputs)!=JSON.stringify(this.outputList))
+        this.onChange(true);
+    else
+        this.onChange(false);
+};
+
+Module.prototype.create = function() {
+    var mod = new Module;
+    mod.source = this.source;
+    mod.compile();
     return mod;
+};
+
+var ModuleRunner = exports.ModuleRunner = function(modules) {
+    this.modules = modules;
+    _.each(modules, function(mod) { mod.fired = false; });
+};
+
+ModuleRunner.prototype.run = function() {
+    var more = true;
+    while (more) {
+        more = false;
+        _.each(this.modules, function(module) {
+            if (module.hasValidInputs() && !module.fired) {
+                module.run();
+                more = true;
+                module.fired = true;
+            }
+        });
+    };
 };
 
 var loadBuiltinModules = function (path, cb) {
     $.get(path, function (data) {
         var sources = data.split('%%%%%%%%%%%%! MODULE SEPARATOR !%%%%%%%%%%%%');
         cb(_.map(sources, function (src) {
-            var match = src.match(/^\s*\/\/\~module:\s+(\w+)\s*$/m);
-            src = src.split(match[0]);
-            return new ModuleFactory(src[1].trim(), match[1]);
+            var mod = new Module();
+            mod.source = src.trim();
+            mod.compile();
+            return mod;
         }));
     });
 };

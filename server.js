@@ -16,7 +16,7 @@ app.engine('.html', require('ejs').__express);
 app.get('/', function(req, res) {
     res.render('index.html');
 });
-var APIs = $.get(/static/)
+
 //Wunderground////////////////////////////////////////////////////////////////////////
 app.get('/wunderground', function(req, res) {
 	res.send([
@@ -38,9 +38,11 @@ app.get('/wunderground', function(req, res) {
 		"webcams",
 		"yesterday"]);
 });
+
 app.post('/wunderground/:func', function(req, res) { //cdde5330c637ed40
     GET(wunderground+req.params.func+"/q/"+req.body.local+".json", res);
 });
+
 //ESPN//////////////////////////////////////////////////////////////////////////////////
 
 app.post('/espn/:function/', function(req, res) {
@@ -52,14 +54,14 @@ app.post('/espn/:function/', function(req, res) {
 				var url = espnsite+"now/top?limit=1&apikey="+espnapikey;
 				GET(url,res,function(data,status) {
 					console.log(data);
-					res.send(status,data)
+					res.send(status,data);
 				});
 			}
 			else if (req.body.method == 'popular') {
 				var url = espnsite+"now/popular?limit=1&apikey="+espnapikey;
 				GET(url,res,function(data,status) {
 					console.log(data);
-					res.send(status,data)
+					res.send(status,data);
 				});
 			}
 			else {
@@ -100,8 +102,6 @@ app.post('/rottentomatoes', function(req, res){
 	}
 	GET(rotten+query, res);
 });
-
-
 
 var GET = function(url, res){
 	$.ajax({
