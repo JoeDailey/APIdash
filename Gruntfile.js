@@ -6,8 +6,7 @@ module.exports = function(grunt) {
   var clientScripts = [
     'src/utils.js',
     'src/module.js',
-    'src/builder.js',
-    'src/main.js'
+    'src/builder.js'
   ];
 
   grunt.initConfig({
@@ -19,7 +18,11 @@ module.exports = function(grunt) {
 
       client: {
         src: clientScripts,
-        dest: 'static/app.js'
+        dest: 'static/app.js',
+        options: {
+          banner: "(function(exports, global) {\n\tglobal.APIDash = exports;\n",
+          footer: "\n})({}, function() { return this; }());"
+        }
       },
 
       modules: {
@@ -28,9 +31,9 @@ module.exports = function(grunt) {
         options: {
           separator: '\n%%%%%%%%%%%%! MODULE SEPARATOR !%%%%%%%%%%%%\n',
           process: function(src, filepath) {
-            var filename = path.basename(filepath, '.coffee');
+            var filename = path.basename(filepath, '.js');
             return "//~module: " + filename + "\n" + src;
-          },
+          }
         }
       }
     },
