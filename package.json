@@ -1,0 +1,12 @@
+{
+  "name": "apidash",
+  "description": "apidash",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "grunt-contrib-concat": "~0.3.0",
+    "grunt-contrib-watch": "~0.5.3",
+    "grunt": "~0.4.2",
+    "grunt-contrib-clean": "~0.5.0"
+  }
+}
