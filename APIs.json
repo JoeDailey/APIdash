@@ -3,68 +3,87 @@
 		"API":"wunderground",
 		"functions":[
 			{
-				"name":"alerts",
+				"route":"alerts",
 				"params":"local"
 			},
 			{
-				"name":"almanac",
+				"route":"almanac",
 				"params":"local"
 			},
 			{
-				"name":"astronomy",
+				"route":"astronomy",
 				"params":"local"
 			},
 			{
-				"name":"currenthurricane",
+				"route":"currenthurricane",
 				"params":"local"
 			},
 			{
-				"name":"forecast",
+				"route":"forecast",
 				"params":"local"
 			},
 			{
-				"name":"forecast10day",
+				"route":"forecast10day",
 				"params":"local"
 			},
 			{
-				"name":"geolookup",
+				"route":"geolookup",
 				"params":"local"
 			},
 			{
-				"name":"history",
+				"route":"history",
 				"params":"local"
 			},
 			{
-				"name":"hourly",
+				"route":"hourly",
 				"params":"local"
 			},
 			{
-				"name":"hourly10day",
+				"route":"hourly10day",
 				"params":"local"
 			},
 			{
-				"name":"planner",
+				"route":"planner",
 				"params":"local"
 			},
 			{
-				"name":"rawtide",
+				"route":"rawtide",
 				"params":"local"
 			},
 			{
-				"name":"satellite",
+				"route":"satellite",
 				"params":"local"
 			},
 			{
-				"name":"tide",
+				"route":"tide",
 				"params":"local"
 			},
 			{
-				"name":"webcams",
+				"route":"webcams",
 				"params":"local"
 			},
 			{
-				"name":"yesterday",
+				"route":"yesterday",
 				"params":"local"
+			}
+		]
+	},
+	{
+		"API":"Rotten Tomatoes",
+		"functions":[
+			{
+				"route":"/",//search query
+				"params":[
+					"search"//string of words with spaces or "+"'s
+					"rpp"//results per page; default 10
+					"pageNum"//defualt 0
+				]
+			},
+			{
+				"route":"/",//by id
+				"params":[
+					"rotten_id"
+				]
 			}
 		]
 	}

@@ -54,6 +54,23 @@ app.post('/espn/:function',function(req, res) {
 });
 
 
+
+//Rotten Tomatoes//////////////////////////////////////////////////////////////////////
+app.post('/rottentomatoes', function(req, res){
+	if(req.body.rpp=undefined)req.body.rpp = 10;
+	if(req.body.pageNum=undefined)req.body.pageNum = 0;
+
+	var query = "";
+	if(req.body.search != undefined){
+		query = tomatoes+"&q="+req.body.search.replace(" ","+")+"&page_limit="+req.body.rpp+"&page="+req.body.pageNum;
+	}else{
+		query = "/"+req.body.rotten_id+tomatoes;
+	}
+	GET(rotten+query, res);
+});
+
+
+
 var GET = function(url, res){
 	$.ajax({
 		url: url,
@@ -75,7 +92,7 @@ var GETcallback = function(url, res, success){
 		error:function(error){
 			res.send(400, {'message':"Bad Request"});
 		},
-		'success':success(result, status);
+		'success':success(result, status)
 		//res.send(status, result[must be json]);
 	});
 }
@@ -94,3 +111,5 @@ app.get('/espn/:function', function(req, res) {
 
 //URL bases///////////////////////////////////////////////////////////
 var wunderground = "http://api.wunderground.com/api/cdde5330c637ed40/";
+var rotten = "http://api.rottentomatoes.com/api/public/v1.0/movies";
+var tomatoes = ".json?apikey=za85re4b6nxhqrhj55j5xtmp";

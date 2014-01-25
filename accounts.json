@@ -1,0 +1,12 @@
+{
+	"wunderground":{
+		"email":0,
+		"pass":0,
+		"key":0
+	},
+	"RottenTomatoes":{
+		"email":"APIdashTeam@gmail.com",
+		"pass":"agressivepizza1",
+		"key":"za85re4b6nxhqrhj55j5xtmp"
+	}
+}
