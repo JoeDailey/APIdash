@@ -16,7 +16,7 @@ app.engine('.html', require('ejs').__express);
 app.get('/', function(req, res) {
     res.render('index.html');
 });
-
+var APIs = $.get(/static/)
 //Wunderground////////////////////////////////////////////////////////////////////////
 app.get('/wunderground', function(req, res) {
 	res.send([
@@ -65,6 +65,18 @@ var GET = function(url, res){
 		success:function(result, status){
 			res.send(status, result);
 		}
+	});
+}
+var GETcallback = function(url, res, success){
+	$.ajax({
+		url: url,
+		type: "GET",
+		dataType: "json",
+		error:function(error){
+			res.send(400, {'message':"Bad Request"});
+		},
+		'success':success(result, status);
+		//res.send(status, result[must be json]);
 	});
 }
 
