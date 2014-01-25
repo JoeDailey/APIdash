@@ -4,67 +4,67 @@
 		"functions":[
 			{
 				"name":"alerts",
-				"params":"location"
+				"params":"local"
 			},
 			{
 				"name":"almanac",
-				"params":"location"
+				"params":"local"
 			},
 			{
 				"name":"astronomy",
-				"params":"location"
+				"params":"local"
 			},
 			{
 				"name":"currenthurricane",
-				"params":"location"
+				"params":"local"
 			},
 			{
 				"name":"forecast",
-				"params":"location"
+				"params":"local"
 			},
 			{
 				"name":"forecast10day",
-				"params":"location"
+				"params":"local"
 			},
 			{
 				"name":"geolookup",
-				"params":"location"
+				"params":"local"
 			},
 			{
 				"name":"history",
-				"params":"location"
+				"params":"local"
 			},
 			{
 				"name":"hourly",
-				"params":"location"
+				"params":"local"
 			},
 			{
 				"name":"hourly10day",
-				"params":"location"
+				"params":"local"
 			},
 			{
 				"name":"planner",
-				"params":"location"
+				"params":"local"
 			},
 			{
 				"name":"rawtide",
-				"params":"location"
+				"params":"local"
 			},
 			{
 				"name":"satellite",
-				"params":"location"
+				"params":"local"
 			},
 			{
 				"name":"tide",
-				"params":"location"
+				"params":"local"
 			},
 			{
 				"name":"webcams",
-				"params":"location"
+				"params":"local"
 			},
 			{
 				"name":"yesterday",
-				"params":"location"
+				"params":"local"
 			}
 		]
 	}

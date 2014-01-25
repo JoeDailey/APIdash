@@ -5,6 +5,10 @@ var express = require('express');
 var app = express();
 
 app.use('/static', express.static(__dirname + '/static'));
+app.use(express.bodyParser());
+app.set('view options', {
+    layout: false
+});
 app.listen(9001);
 app.set('views', __dirname + '/views');
 app.engine('.html', require('ejs').__express);
@@ -12,7 +16,7 @@ app.engine('.html', require('ejs').__express);
 app.get('/', function(req, res) {
     res.render('index.html');
 });
- 
+
 //Wunderground////////////////////////////////////////////////////////////////////////
 app.get('/wunderground', function(req, res) {
 	res.send([
@@ -35,7 +39,7 @@ app.get('/wunderground', function(req, res) {
 		"yesterday"]);
 });
 app.post('/wunderground/:func', function(req, res) { //cdde5330c637ed40
-    GET(wunderground+req.params.func+"/q/"+req.body.param+".json", res);
+    GET(wunderground+req.params.func+"/q/"+req.body.local+".json", res);
 });
 //ESPN//////////////////////////////////////////////////////////////////////////////////
 app.post('/espn/:function',function(req, res) {
