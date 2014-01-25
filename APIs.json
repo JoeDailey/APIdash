@@ -86,5 +86,112 @@
 				]
 			}
 		]
+	},
+	{
+		"API":"Digital Ocean",
+		"functions":[
+			{
+				"route":"/droplets/list",//search query
+				"params":[
+					"client_id",//required
+				]
+			},
+			{
+				"route":"/droplets/new",//search query
+				"params":[
+					"client_id",//required
+					"drop_size_id",
+					"drop_image_id",
+					"drop_region",
+					"drop_ssh_keys",
+					"drop_backup_enabled",
+					"drop_private_networking"
+				]
+			},
+			{
+				"route":"/droplets/reboot",//search query
+				"params":[
+					"client_id",//required
+					"droplet_id",//without returns list of droplets
+				]
+			},
+			{
+				"route":"/droplets/power_cycle",//search query
+				"params":[
+					"client_id",//required
+					"droplet_id",//without returns list of droplets
+				]
+			},
+			{
+				"route":"/droplets/power_off",//search query
+				"params":[
+					"client_id",//required
+					"droplet_id",//without returns list of droplets
+				]
+			},
+			{
+				"route":"/droplets/power_on",//search query
+				"params":[
+					"client_id",//required
+					"droplet_id",//without returns list of droplets
+				]
+			},
+			{
+				"route":"/droplets/password_reset",//search query
+				"params":[
+					"client_id",//required
+					"droplet_id",//without returns list of droplets
+				]
+			},
+			{
+				"route":"/droplets/resize",//search query
+				"params":[
+					"client_id",//required
+					"droplet_id",//without returns list of droplets
+				]
+			},
+			{
+				"route":"/droplets/snapshot",//search query
+				"params":[
+					"client_id",//required
+					"droplet_id",//without returns list of droplets
+				]
+			},
+			{
+				"route":"/droplets/shutdown",//search query
+				"params":[
+					"client_id",//required
+					"droplet_id",//without returns list of droplets
+				]
+			},
+			{
+				"route":"/droplets/restore",//search query
+				"params":[
+					"client_id",//required
+					"droplet_id",//without returns list of droplets
+				]
+			},
+			{
+				"route":"/droplets/rebuild",//search query
+				"params":[
+					"client_id",//required
+					"droplet_id",//without returns list of droplets
+				]
+			},
+			{
+				"route":"/droplets/rename",//search query
+				"params":[
+					"client_id",//required
+					"droplet_id",//without returns list of droplets
+				]
+			},
+			{
+				"route":"/droplets/destroy",//search query
+				"params":[
+					"client_id",//required
+					"droplet_id",//without returns list of droplets
+				]
+			}
+		]
 	}
 ]

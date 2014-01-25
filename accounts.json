@@ -8,5 +8,16 @@
 		"email":"APIdashTeam@gmail.com",
 		"pass":"agressivepizza1",
 		"key":"za85re4b6nxhqrhj55j5xtmp"
+	},
+	"Digital Ocean":{
+		"email":"josephldailey@gmail.com",
+		"pass":"chipper12",
+		"key":"dfcefb37223cd8206e6a194999a5dae1"
+	},
+	"Pinterest":{
+		"key":[
+			"35ba50434128dceb477f36db78eca08aaf51865d",
+			"0661e058db6565fea6d0edff82b669badd1700a2"
+		]
 	}
 }
