@@ -79,8 +79,8 @@
 
     BuilderPort.prototype.pinPos = function() {
         var pt = this.pin.localToGlobal(0, 0);
-        pt.x /= 2;
-        pt.y /= 2;
+        pt.x /= this.container.getStage().ratio;
+        pt.y /= this.container.getStage().ratio;
         return pt;
     };
 
