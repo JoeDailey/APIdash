@@ -32,4 +32,10 @@ app.listen(9001);
 app.get('/', function(req, res) {
     res.render('home', {});
 });
+app.post('/espn/:function',function(req, res) {
+	switch (req.params.function) {
+		case 'now':
+			$.ajax(
+			res.send();
+});
 
