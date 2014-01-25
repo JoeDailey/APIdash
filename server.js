@@ -45,7 +45,7 @@ app.post('/wunderground/:func', function(req, res) { //cdde5330c637ed40
 
 //ESPN//////////////////////////////////////////////////////////////////////////////////
 
-app.post('/espn/:function/', function(req, res) {
+app.post('/espn/:function', function(req, res) {
 	switch (req.params.function) {
 		case 'now':
 			console.log("in now");
@@ -66,17 +66,18 @@ app.post('/espn/:function/', function(req, res) {
 			}
 			else {
 				var add = "";
-				if (reg.body.leagues) {
-					add = "leagues="+reg.body.leagues+"&";
+				if (req.body.leagues) {
+					add = "leagues="+req.body.leagues+"&";
 				}
-				if (reg.body.groups) {
+				if (req.body.groups) {
 					add = add+"groups="+red.body.groups+"&";
 				}
-				if (reg.body.teams) {
-					add = add+"teams="+reg.body.teams+"&";
+				if (req.body.teams) {
+					add = add+"teams="+req.body.teams+"&";
 				}
 				var url = espnsite+"now?"+add+"limit=1&apikey="+espnapikey;
-				GET(url,res,function(data,status) {
+				console.log(url);
+				GETcallback(url,res,function(data,status) {
 					res.send(status,data.feed);
 				});
 			}
@@ -102,8 +103,63 @@ app.post('/rottentomatoes', function(req, res){
 	}
 	GET(rotten+query, res);
 });
+//Digital Ocean///////////////////////////////////////////////////////////////////////
+app.post('/digitalocean/:func', function(req, res){
+	if(req.params.func == "new"){
+		var opt1="", opt2="", opt3="";
+		if(req.body.drop_ssh_keys != undefined) opt1 = "&ssh_key_ids="+req.body.drop_ssh_keys;
+		if(req.body.private_networking != undefined) opt2 = "&private_networking="+req.body.drop_private_networking;
+		if(req.body.backups_enabled != undefined) opt3 = "&backups_enabled="+req.body.drop_backups_enabled;
+		GET(digital+"new"+shark+req.body.client_id+ocean+"&name="+req.body.drop_name+"&size_id="+req.body.drop_size_id+"&image_id="+req.body.drop_image_id+"&region_id="+req.body.drop_region_id+opt1+opt2+opt3, res);
+	}
+	else if(req.params.func == "list"){
+		GET(digital+shark+req.body.client_id+ocean, res);
+	}
+	else if(req.params.func == "resize"){
+		GET(digital+req.body.droplet_id+"/"+req.params.func+shark+req.body.client_id+ocean+"size_id="+req.body.drop_size_id, res);
+	}
+	else if(req.params.func == "restore" || req.params.func == "rebuild"){
+		GET(digital+req.body.droplet_id+"/"+req.params.func+shark+req.body.client_id+ocean+"image_id="+req.body.drop_image_id, res);
+	}
+	else if(req.params.func == "rename"){
+		GET(digital+req.body.droplet_id+"/"+req.params.func+shark+req.body.client_id+ocean+"name="+req.body.drop_name, res);
+	}
+	else if(req.params.func == "rename"){
+		var opt1 = ""
+		if(req.body.drop_scrub_data != undefined) opt1 = "&scrub_data="+req.body.drop_scrub_data;
+		GET(digital+req.body.droplet_id+"/"+req.params.func+shark+req.body.client_id+ocean+opt1, res);
+	}
+	else{
+		GET(digital+req.body.droplet_id+"/"+req.params.func+shark+req.body.client_id+ocean, res);
+	}
+});
+app.post('/sendgrid/send', function(req, res){
+	var json = {
+				api_user:req.body.api_user,
+				api_key:req.body.api_key,
+				to:req.body.to,
+				toname:req.body.toname,
+				subject:req.body.subject,
+				text:req.body.text,
+				from:req.body.from
+			};
+
+	$.ajax({
+		url: "https://api.sendgrid.com/api/mail.send.json",
+		type: "POST",
+		dataType: "json",
+		data:json,
+		error:function(error){
+			res.send(400, {'message':error});
+		},
+		success:function(result, status){
+			res.send(status, result);
+		}
+	});
+});
 
 var GET = function(url, res){
+	console.log(url);
 	$.ajax({
 		url: url,
 		type: "GET",
@@ -116,16 +172,17 @@ var GET = function(url, res){
 		}
 	});
 }
-var GETcallback = function(url, res, success){
+var GETcallback = function(url, res, sucs){
 	$.ajax({
 		url: url,
 		type: "GET",
 		dataType: "json",
+		success:function(result, status){
+			sucs(result, status);
+		},
 		error:function(error){
 			res.send(400, {'message':"Bad Request"});
-		},
-		'success':success(result, status)
-		//res.send(status, result[must be json]);
+		}
 	});
 }
 
@@ -137,3 +194,6 @@ var rotten = "http://api.rottentomatoes.com/api/public/v1.0/movies";
 var tomatoes = ".json?apikey=za85re4b6nxhqrhj55j5xtmp";
 var espnsite = "http://api.espn.com/v1/";
 var espnapikey = "q37qt8hvvk83u9ppwymr9d2g";
+var digital = "https://api.digitalocean.com/droplets/";
+var shark = "?client_id=";
+var ocean = "&api_key=dfcefb37223cd8206e6a194999a5dae1";
