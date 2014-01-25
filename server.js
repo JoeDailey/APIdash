@@ -20,5 +20,11 @@ app.get('/espn/:function', function(req, res) {
 				console.log(data);
 				res.json(data.feed[0].headline);
 			});
+		case 'headlines':
+			var url = "http://api.espn.com/v1/sports/news/headlines?limit=1&apikey=q37qt8hvvk83u9ppwymr9d2g";
+			$.get(url,function(data) {
+				console.log(data);
+				res.json(data.headlines[0].headline);
+			});
 	}
 });
