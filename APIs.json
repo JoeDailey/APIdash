@@ -88,6 +88,29 @@
 		]
 	},
 	{
+		"API":"SendGrid",
+		"functions":[
+			{
+				"route":"/send",//search query
+				"params":[
+					"api_user",
+					"api_key",
+					[
+						"to",
+						"to"
+					],
+					[
+						"toname",
+						"toname"
+					],
+					"subject",
+					"text",
+					"from"
+				]
+			},
+		]
+	},
+	{
 		"API":"Digital Ocean",
 		"functions":[
 			{
@@ -112,35 +135,35 @@
 				"route":"/droplets/reboot",//search query
 				"params":[
 					"client_id",//required
-					"droplet_id",//without returns list of droplets
+					"droplet_id"//without returns list of droplets
 				]
 			},
 			{
 				"route":"/droplets/power_cycle",//search query
 				"params":[
 					"client_id",//required
-					"droplet_id",//without returns list of droplets
+					"droplet_id"//without returns list of droplets
 				]
 			},
 			{
 				"route":"/droplets/power_off",//search query
 				"params":[
 					"client_id",//required
-					"droplet_id",//without returns list of droplets
+					"droplet_id"//without returns list of droplets
 				]
 			},
 			{
 				"route":"/droplets/power_on",//search query
 				"params":[
 					"client_id",//required
-					"droplet_id",//without returns list of droplets
+					"droplet_id"//without returns list of droplets
 				]
 			},
 			{
 				"route":"/droplets/password_reset",//search query
 				"params":[
 					"client_id",//required
-					"droplet_id",//without returns list of droplets
+					"droplet_id"//without returns list of droplets
 				]
 			},
 			{
@@ -148,13 +171,14 @@
 				"params":[
 					"client_id",//required
 					"droplet_id",//without returns list of droplets
+					"drop_size_id"
 				]
 			},
 			{
 				"route":"/droplets/snapshot",//search query
 				"params":[
 					"client_id",//required
-					"droplet_id",//without returns list of droplets
+					"droplet_id"//without returns list of droplets
 				]
 			},
 			{
@@ -162,6 +186,7 @@
 				"params":[
 					"client_id",//required
 					"droplet_id",//without returns list of droplets
+					"drop_name"
 				]
 			},
 			{
@@ -169,6 +194,7 @@
 				"params":[
 					"client_id",//required
 					"droplet_id",//without returns list of droplets
+					"drop_image_id"
 				]
 			},
 			{
@@ -176,6 +202,7 @@
 				"params":[
 					"client_id",//required
 					"droplet_id",//without returns list of droplets
+					"drop_image_id"
 				]
 			},
 			{
@@ -183,6 +210,7 @@
 				"params":[
 					"client_id",//required
 					"droplet_id",//without returns list of droplets
+					"drop_name"
 				]
 			},
 			{
@@ -190,6 +218,7 @@
 				"params":[
 					"client_id",//required
 					"droplet_id",//without returns list of droplets
+					"drop_scrub_data"
 				]
 			}
 		]

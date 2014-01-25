@@ -131,7 +131,30 @@ app.post('/digitalocean/:func', function(req, res){
 		GET(digital+req.body.droplet_id+"/"+req.params.func+shark+req.body.client_id+ocean, res);
 	}
 });
+app.post('/sendgrid/send', function(req, res){
+	var json = {
+				api_user:req.body.api_user,
+				api_key:req.body.api_key,
+				to:req.body.to,
+				toname:req.body.toname,
+				subject:req.body.subject,
+				text:req.body.text,
+				from:req.body.from
+			};
 
+	$.ajax({
+		url: "https://api.sendgrid.com/api/mail.send.json",
+		type: "POST",
+		dataType: "json",
+		data:json,
+		error:function(error){
+			res.send(400, {'message':error});
+		},
+		success:function(result, status){
+			res.send(status, result);
+		}
+	});
+});
 
 
 
