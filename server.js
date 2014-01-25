@@ -1,3 +1,5 @@
+var $ = require('jQuery');
+
 
 var express = require('express');
 var app = express();
@@ -9,4 +11,14 @@ app.engine('.html', require('ejs').__express);
 
 app.get('/', function(req, res) {
     res.render('index.html');
+});
+app.get('/espn/:function', function(req, res) {
+	switch (req.params.function) {
+		case 'now':
+			var url = "http://api.espn.com/v1/now?limit=1&apikey=q37qt8hvvk83u9ppwymr9d2g";
+			$.get(url,function(data) {
+				console.log(data);
+				res.json(data.feed[0].headline);
+			});
+	}
 });
