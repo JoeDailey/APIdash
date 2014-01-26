@@ -286,9 +286,9 @@
     // BUILDER
     //------------------------------------------------------
     exports.createBuilder = function(elem) {
-        var stage = createStage(640, 480);
-        stage.width = 640;
-        stage.height = 480;
+        var stage = createStage(1024, 650);
+        stage.width = 1024;
+        stage.height = 650;
         stage.enableMouseOver();
 
         $(elem).append(stage.canvas);
@@ -301,7 +301,7 @@
         stage.addChild(wireContainer);
 
         var bg = new G.Shape;
-        bg.graphics.f('#f9f9f9').r(0, 0, 640, 480);
+        bg.graphics.f('#f9f9f9').r(0, 0, stage.width, stage.height);
         container.addChild(bg);
 
         var srcPort = null;
@@ -315,13 +315,14 @@
         };
 
         stage.on('stagemousemove', function (evt) {
+            console.log(stage.getObjectUnderPoint(evt.stageX / stage.ratio, evt.stageY / stage.ratio));
             if (srcPort) {
                 var pos = srcPort.pinPos();
                 drawWire(wire.graphics, pos.x, pos.y, evt.stageX / stage.ratio, evt.stageY / stage.ratio);
             }
         });
 
-        stage.on('click', clearWiring);
+        bg.on('click', clearWiring());
 
         var editing = null, oldCode = '';
 
