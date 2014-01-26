@@ -5,8 +5,16 @@ module.config({
 });
 
 module.process(function() {
+
+
+    var inp = module.input('to');
+    if (inp.length > 0 && inp.charAt(0) != '+')
+        inp = '+1' + inp;
+
     utils.api('twilio/sendmessage', {
-        'to': module.input('to'),
+        'to': inp,
         'message': module.input('message')
+    }, function() {
+        utils.notify("Successfully texted " + module.input('to'));
     });
 });

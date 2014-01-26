@@ -156,7 +156,7 @@
             });
 
             var dom = new G.DOMElement(elem.get(0));
-            dom.scaleX = dom.scaleY = 0.5;
+            dom.scaleX = dom.scaleY = 1 / stage.getStage().ratio;
 
             dom.addEventListener('tick', function() {
                 dom.x = c.x / 2 + 12;
