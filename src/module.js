@@ -44,21 +44,26 @@ var Module = function() {
     this.onChange = function() {};
 
     this.fired = false;
-};
 
-Module.prototype.input = function(key) {
-    return this.inputs[key].val;
-};
-
-Module.prototype.send = function(output, data) {
-    this.outputs[output].setVal(data);
-};
-
-Module.prototype.hasValidInputs = function() {
     var self = this;
-    return _.every(this.inputs, function(conn) {
-        return conn.hasValue();
-    });
+
+    self.input = function(key) {
+        return self.inputs[key].val;
+    };
+
+    self.send = function(output, data) {
+        self.outputs[output].setVal(data);
+    };
+
+    self.hasValidInputs = function() {
+        return _.every(self.inputs, function(conn) {
+            return conn.hasValue();
+        });
+    };
+
+    self.input = function(name) {
+        return self.inputs[name].getValue();
+    };
 };
 
 Module.prototype.run = function() {
@@ -95,11 +100,6 @@ Module.prototype.process = function(func) {
     this.func = func || function() {};
 };
 
-/* retrieve an input by name */
-Module.prototype.input = function(name) {
-    return this.inputs[name].getValue();
-};
-
 Module.prototype.compile = function() {
     var script = "with (scope) {\n" + this.source + "\n}";
     script = Function('scope', script);
@@ -128,21 +128,42 @@ Module.prototype.create = function() {
 
 var ModuleRunner = exports.ModuleRunner = function(modules) {
     this.modules = modules;
-    _.each(modules, function(mod) { mod.fired = false; });
 };
 
 ModuleRunner.prototype.run = function() {
-    var more = true;
-    while (more) {
-        more = false;
-        _.each(this.modules, function(module) {
+
+    _.each(this.modules, function(mod) {
+        mod.fired = false;
+        _.each(mod.outputs, function(conn, k) {
+            conn.setVal(null);
+        });
+    });
+
+    var self = this;
+    var tick = function() {
+        var more = false;
+        _.each(self.modules, function(module) {
             if (module.hasValidInputs() && !module.fired) {
                 module.run();
                 more = true;
                 module.fired = true;
             }
         });
+
+        if (more) {
+            setTimeout(tick, 0);
+            return;
+        }
+
+        if ($.active > 0) {
+            $(document).ajaxStop(function() {
+                $(document).off('ajaxStop');
+                tick();
+            });
+        }
     };
+
+    tick();
 };
 
 var loadBuiltinModules = function (path, cb) {

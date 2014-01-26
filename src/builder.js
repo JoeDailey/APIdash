@@ -57,17 +57,19 @@
         var c = this.container = new G.Container;
 
         var s = new G.Shape();
-        s.graphics.f(cportinner).ss(1).s(cportouter);
+        s.graphics.f('#98b7ef');
         var rad = connHeight / 2;
+        /*
         if (isInput)
             s.graphics.drawRoundRectComplex(0, 0, connWidth, connHeight, rad, 0, 0, rad);
         else
             s.graphics.drawRoundRectComplex(0, 0, connWidth, connHeight, 0, rad, rad, 0);
-
+         */
+        s.graphics.drawRoundRect(0, 0, connWidth, connHeight, rad);
         c.addChild(s);
 
         var pin = this.pin = new G.Shape;
-        pin.graphics.f(cportcircle).drawCircle(0, 0, pinRadius).ef();
+        pin.graphics.f('#759eda').drawCircle(0, 0, pinRadius).ef();
         if (isInput) {
             pin.x = pinMargin + pinRadius;
             pin.y = pinRadius + pinMargin;
@@ -75,6 +77,9 @@
             pin.x = connWidth - pinRadius - pinMargin;
             pin.y = pinRadius + pinMargin;
         }
+
+        pin.shadow = new G.Shadow('#666', 1, 1, 1);
+        s.shadow = new G.Shadow('#666', 1, 1, 1);
 
         c.addChild(pin);
 
@@ -115,33 +120,53 @@
         };
     };
 
+    BuilderModule.prototype.removeConnections = function() {
+        _.each(this.ports, function (port) {
+            if (port.wire)
+                port.wire.remove();
+        });
+    };
+
     BuilderModule.prototype.update = function() {
 
         var size = Math.max(this.module.inputList.length, this.module.outputList.length);
 
         var c = this.container;
         c.removeAllChildren();
-
-        _.each(this.ports, function (port) {
-            if (port.wire)
-                port.wire.remove();
-        });
+        this.removeConnections();
 
         var body = new G.Shape;
         c.addChild(body);
 
-        // using vector drawing shortcuts
+        var del = this.delbtn = new G.Shape;
+        del.graphics.ss(3).s('#333').moveTo(0, 0).lineTo(8, 8)
+            .moveTo(8, 0).lineTo(0, 8).es();
+
+        var hit = new G.Shape;
+        hit.graphics.beginFill('#000').drawRect(-1, -1, 9, 9);
+        del.hitArea = hit;
+
+        del.alpha = 0.7;
+        del.on('mouseover', function() { del.alpha = 1; });
+        del.on('mouseout', function() { del.alpha = 0.7; });
+
+        c.addChild(del);
+        del.x = connProtrude + bodyWidth - 13;
+        del.y = 5;
+
+        // Using drawing shortcuts
         // f = fill, ss = stroke size, s = begin stroke, r = rect
         // ef = end fill, es = end stroke.
         // http://www.createjs.com/Docs/EaselJS/classes/Graphics.html
-        body.graphics.f(cboxinner).ss(1).s(cboxouter)
-            .drawRoundRectComplex(connProtrude, 0, bodyWidth, titleHeight + connSpace * size, 5, 5, 5, 5)
+        body.graphics.f('#759eda')
+            .drawRoundRect(connProtrude, 0, bodyWidth, titleHeight + connSpace * size, 5)
             .ef().es();
 
+        body.shadow = new G.Shadow('#666', 1, 1, 1);
+
         var t = new G.Text(this.module.name, '10px verdana', '#000');
-        t.x = connProtrude + bodyWidth / 2;
-        t.y = titleHeight / 2;
-        t.regX = t.getBounds().width / 2;
+        t.x = connProtrude + 5;
+        t.y = titleHeight / 2 - 2;
         t.regY = t.getBounds().height / 2;
         c.addChild(t);
         this.text = t;
@@ -167,9 +192,19 @@
 
     var drawWire = function(g, fromx, fromy, tox, toy) {
         g.clear();
-        g.ss(3).s('#444')
+
+        g.f('#666').drawCircle(fromx, fromy, pinRadius)
+            .drawCircle(tox, toy, pinRadius).ef();
+
+        g.ss(pinRadius).s('#666')
             .moveTo(fromx, fromy)
-            .lineTo(tox, toy);
+            .bezierCurveTo(
+                (fromx * 1 + tox * 1) / 2,
+                fromy,
+                (fromx * 1 + tox * 1) / 2,
+                toy,
+                tox,
+                toy);
     };
 
     var Wire = function(from, to) {
@@ -217,7 +252,7 @@
         stage.addChild(wireContainer);
 
         var bg = new G.Shape;
-        bg.graphics.f(ccanvas).r(0, 0, 640, 480);
+        bg.graphics.f('#f9f9f9').r(0, 0, 640, 480);
         container.addChild(bg);
 
         var srcPort = null;
@@ -246,6 +281,7 @@
                 if (port.pin.hasEventListener("click"))
                     return;
                 port.pin.on("click", function (evt) {
+
                     evt.stopPropagation();
                     if (!srcPort) {
                         if (port.wire)
@@ -256,7 +292,15 @@
                             clearWiring();
                             return;
                         }
-                        var w = new Wire(srcPort, port);
+                        if (port.wire)
+                            port.wire.remove();
+
+                        var w;
+                        if (port.isInput)
+                            w = new Wire(srcPort, port);
+                        else
+                            w = new Wire(port, srcPort);
+
                         wireContainer.addChild(w.container);
                         clearWiring();
                     }
@@ -289,6 +333,12 @@
                 $("#codemodal textarea").val(b.module.source);
                 oldCode = b.module.source;
                 editing = b;
+            });
+
+            b.delbtn.on('click', function() {
+                container.removeChild(b.container);
+                b.removeConnections();
+                modules = _.without(modules, b);
             });
         };
 
