@@ -176,7 +176,7 @@ app.post('/twilio/sendmessage', function(req, res){
 			Body:req.body.message
 		},
 		username: "ACe088ee6d17bce77541ba206263955b8b",
-			password: "9e730cd406c655aea6a7e644be15c0fe",
+		password: "9e730cd406c655aea6a7e644be15c0fe",
 		error:function(error){
 			res.send(400, {'message':error});
 		},
@@ -193,13 +193,15 @@ app.post('/twitter/:function', function(req, res) {
 				console.log(util.inspect(data));
 			}).updateStatus(req.body.message,function(data) {
 				console.log(util.inspect(data));
+				res.send(200,{'data':data});
 			});
-			res.send(200,'yah');
 		case 'feed':
 			break;
 	}
 });
+app.post('/twilio/sendmessage', function(req, res){
 
+});
 
 var GET = function(url, res){
 	console.log(url);
