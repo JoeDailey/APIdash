@@ -1,6 +1,22 @@
 var $ = require('jQuery');
 
 var util = require('util');
+var dbox  = require("dbox");
+var app   = dbox.app({ "app_key": "khf2wcgta1uewtj", "app_secret": "naxztmmgalat515" });
+// app.requesttoken(function(status, request_token){
+// 	console.log(request_token);
+// });
+// var t = { oauth_token_secret: 'zQRjFJZd1P7xE0a3',
+//   oauth_token: '0dCdTWsRcOgBhl3G',
+//  authorize_url: 'https://www.dropbox.com/1/oauth/authorize?oauth_token=0dCdTWsRcOgBhl3G' };
+// app.accesstoken(t, function(status, access_token){
+//   console.log(access_token)
+// })
+var dboxtoken = { oauth_token_secret: '43ibayca9p4yylh',
+  oauth_token: '7x0z6sy2b6jhh9c9',
+  uid: '260885326' };
+var dbclient = app.client(dboxtoken);
+
 var twitter = require('twitter');
 var twit = new twitter({
 	consumer_key: '76Ed5HIc8fzkDIPoIqUv4Q',
@@ -212,8 +228,9 @@ app.post('/twitter/:function', function(req, res) {
 //DropBox///////////////////////////////////////////////////////////////////////
 app.post('/dropbox/:func', function(req, res){
 	if(req.params.func == "write"){
-		var dropbox = new DropboxClient("lpig9evi8tva3hw","iy3gza3s6ur0ki1");
-		dropbox.getAccessToken("apidashteam@gmail.com", "agressivepizza", function(a,b){console.log(a); console.log(b)});
+		dbclient.put(req.body.filename, req.body.content, {root:"dropbox",overwrite:"false"}, function(status, reply){
+			res.send(200,'yah');
+		})
 	}
 });
 
