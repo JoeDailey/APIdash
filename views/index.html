@@ -22,19 +22,28 @@
         font-family: 'lucida console', monaco, monospace;
         font-size: 11px;
       }
+      #console{
+        border:solid 1px #aaa; 
+        padding:5px;
+        margin-top:5px;
+        margin-bottom:5px;
+        width:642px;
+        height:80px;
+        overflow-y:scroll;
+      }
     </style>
 
   </head>
   <body>
 
-    <div id="codemodal" title="Code Editor">
+    <div id="codemodal" title="Module Editor">
       <textarea></textarea>
     </div>
 
     <div id="container">
     </div>
-
     <button id="run">run</button>
+    <div id="console"></div>
 
     <script src="static/vendor.js"></script>
     <script src="static/app.js"></script>

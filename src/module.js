@@ -54,6 +54,8 @@ Module.prototype.input = function(key) {
 };
 
 Module.prototype.send = function(output, data) {
+    console.log(output);
+    console.log(data);
     this.outputs[output].setVal(data);
 };
 
@@ -71,6 +73,10 @@ Module.prototype.input = function(name) {
 
 Module.prototype.run = function() {
     this.func();
+};
+
+Module.prototype.addXHR = function(xhr) {
+
 };
 
 Module.prototype.config = function(obj) {
@@ -138,7 +144,7 @@ ModuleRunner.prototype.run = function() {
     _.each(this.modules, function(mod) {
         mod.fired = false;
         _.each(mod.outputs, function(conn, k) {
-            conn.setVal(null);
+            conn && conn.setVal(null);
         });
     });
 
