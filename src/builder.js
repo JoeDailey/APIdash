@@ -122,7 +122,7 @@
         del.graphics.ss(3).s('#333').moveTo(0, 0).lineTo(8, 8)
             .moveTo(8, 0).lineTo(0, 8).es();
         var hit = new G.Shape;
-        hit.graphics.beginFill('#000').drawRect(-1, -1, 9, 9);
+        hit.graphics.beginFill('#000').drawRect(-2, -2, 10, 10);
         del.hitArea = hit;
         del.alpha = 0.7;
         del.on('mouseover', function() { del.alpha = 1; });
@@ -150,7 +150,7 @@
             mod.fixedValue = 'value';
 
             var elem = $('<div class="inp"><input type="text" value="value" style="width: 135px;" /></div>');
-            elem.prependTo($('body'));
+            elem.prependTo($('#container'));
             elem.keyup(function() {
                 mod.fixedValue = elem.children('input').val();
             });
@@ -161,7 +161,7 @@
             dom.scaleX = dom.scaleY = 1 / ratio;
 
             dom.addEventListener('tick', function() {
-                dom.x = c.x / ratio + 12;
+                dom.x = (c.x + 24) / ratio;
                 dom.y = (c.y + 0.5) / ratio;
             });
             dom.mouseEnabled = false;
@@ -291,8 +291,7 @@
         stage.height = 480;
         stage.enableMouseOver();
 
-        $(elem).append(stage.canvas).append(
-            '<div id="builder-modules"></div>');
+        $(elem).append(stage.canvas);
 
         var container = new G.Container;
         container.ratio = stage.ratio;
@@ -411,14 +410,14 @@
         loadBuiltinModules('/static/builtin_modules.txt', function(factories) {
             _.each(factories, function (fact) {
                 var btn = $("<button>" + fact.name + "</button>");
-                $("#builder-modules").append(btn);
+                $("#modules").append(btn);
                 btn.click(function() {
                     addModule(fact.create());
                 });
             });
         });
 
-        G.Ticker.setFPS(35);
+        G.Ticker.setFPS(30);
         G.Ticker.addEventListener('tick', function() {
             stage.update();
         });

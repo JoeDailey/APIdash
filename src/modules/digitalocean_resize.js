@@ -1,5 +1,5 @@
 module.config({
-    'name': 'Resize Digital\nOcean Droplet',
+    'name': 'Resize  Droplet',
     'inputs': ['size', 'client id', 'droplet id', 'api key']
 });
 
