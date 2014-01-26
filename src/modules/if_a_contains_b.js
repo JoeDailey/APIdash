@@ -1,15 +1,12 @@
 module.config({
-    'name': 'If A < B send A',
+    'name': 'If A Contains B',
     'inputs': ['A', 'B'],
     'outputs': 'A',
     'category': 'Logic'
 });
 
 module.process(function() {
-    var out = null;
-    var a = Number(module.input("A"));
-    var b = Number(module.input("B"));
-    if (a < b) {
+    if (module.input("A").toLowerCase().indexOf(module.input("B").toLowerCase()) != -1) {
         module.send("A", module.input("A"));
     }
 });

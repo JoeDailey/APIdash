@@ -2,7 +2,8 @@
 module.config({
     'name': 'Fixed Value',
     'outputs': ['out'],
-    'fixed': true
+    'fixed': true,
+    'category': 'Misc'
 });
 
 module.process(function() {

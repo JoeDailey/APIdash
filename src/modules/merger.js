@@ -1,7 +1,8 @@
 module.config({
     'name': 'Merger',
     'inputs': ['data1', 'data2', 'data3'],
-    'outputs': 'data'
+    'outputs': 'data',
+    'category': 'Processors'
 });
 
 module.process(function() {

@@ -41,6 +41,8 @@ var Module = function() {
     this.func = function() {};
     this.source = "";
 
+    this.category = 'default';
+
     this.onChange = function() {};
     this.fired = false;
 };
@@ -81,6 +83,8 @@ Module.prototype.config = function(obj) {
     obj.inputs = obj.inputs || [];
     obj.outputs = obj.outputs || [];
 
+    this.category = obj.category || 'default';
+
     if (!_.isArray(obj.inputs)) obj.inputs = [obj.inputs];
     if (!_.isArray(obj.outputs)) obj.outputs = [obj.outputs];
 
@@ -108,6 +112,7 @@ Module.prototype.process = function(func) {
 
 Module.prototype.compile = function() {
     var script = "with (scope) {\n" + this.source + "\n}";
+
     script = Function('scope', script);
 
     var oldInputs = this.inputList,

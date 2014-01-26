@@ -1,7 +1,8 @@
 module.config({
-    'name': 'If A Greater Than B',
+    'name': 'If A > B send A',
     'inputs': ['A', 'B'],
-    'outputs': 'A'
+    'outputs': 'A',
+    'category': 'Logic'
 });
 
 module.process(function() {

@@ -2,7 +2,8 @@
 
 module.config({
     'name': 'Log to Console',
-    'inputs': 'data'
+    'inputs': 'data',
+    'category': 'Actions'
 });
 
 module.process(function() {

@@ -1,7 +1,8 @@
 module.config({
     'name': 'Uniquify',
     'inputs': 'data',
-    'outputs': 'data'
+    'outputs': 'data',
+    'category': 'Processors'
 });
 
 module.process(function() {

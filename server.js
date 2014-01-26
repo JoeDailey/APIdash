@@ -1,11 +1,6 @@
 var $ = require('jQuery');
 
 var util = require('util');
-var reddit = require('rereddit'); // working title
-
-// var reddit = new Reddit();
-
-console.log(JSON.stringify(reddit));
 
 var dbox = require("dbox");
 var app = dbox.app({
@@ -215,7 +210,7 @@ app.post('/twitter/:function', function(req, res) {
             });
             break;
         case 'search':
-            twit.get('/search/tweets.json?q=' + req.body.q+'&count='+req.body.count, {
+            twit.get('/search/tweets.json?q=' + req.body.q + '&count=' + req.body.count, {
                 include_entities: true
             }, function(data) {
                 res.send(300, data);
@@ -266,9 +261,7 @@ app.post('/dropbox/:func', function(req, res) {
             root: "dropbox",
             overwrite: "false"
         }, function(status, reply) {
-            res.send(200, {
-                'message': success
-            });
+            res.send(200, status);
         })
     }
 });
@@ -277,20 +270,14 @@ app.post('/cnet/', function(req, res) {
     var url = 'http://developer.api.cnet.com/rest/v1.0/techProduct?productId=' + req.body.id + '&iod=none&viewType=json&partTag=43zw4zhq8adnxex35amrdbw4';
     GET(url, res);
 });
-//Reddit//////////////////////////////////////////////////////////////////////
-app.post('/reddit/comment', function(req, res){
-	reddit.login(req.body.user, req.body.text).end(function(err, user) {
-        if(err)res.send(400, err);
-        else{
-            reddit.comment(req.body.parent, req.body.text).end(function(err, success){
-                if(err)res.send(400, err);
-                else res.send(200, success);
-                console.log(err+", "+success);
-            });
-        }
-    });
-});
 
+app.post('/reddit/:func', function(req, res){
+    if(req.body.page_string==undefined){
+        GET("http://www.reddit.com/r/"+req.params.func+"/.json", res);
+    }else{
+        GET("http://www.reddit.com/r/"+req.params.func+"/"+req.body.page_string+"/.json", res);
+    }
+});
 
 var GET = function(url, res) {
     console.log(url);

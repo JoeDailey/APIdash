@@ -1,6 +1,7 @@
 module.config({
     'name': 'ESPN Headline',
-    'outputs': ['headline']
+    'outputs': ['headline'],
+    'category': 'Data Providers'
 });
 
 module.process(function() {

@@ -1,15 +1,15 @@
 module.config({
-    'name': 'Today\'s Forecast',
+    'name': 'Today\'s Geolookup',
     'inputs': 'location',
-    'outputs': 'forecast'
+    'outputs': 'geolookup'
 });
 
 module.process(function() {
-  xhr = $.post('/wunderground/forecast', {
+  xhr = $.post('/wunderground/geolookup', {
       local: module.input('location')});
 
   xhr.done(function(data) {
       if (data.forecast)
-      module.send('forecast', data.forecast.simpleforecast.forecastday);
+      module.send('geolookup', data);
   });
 });
