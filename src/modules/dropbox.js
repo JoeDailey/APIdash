@@ -1,6 +1,7 @@
 module.config({
     'name': 'Save To Dropbox',
-    'inputs': ['filename', 'content']
+    'inputs': ['filename', 'content'],
+    'category': "Actions"
 });
 
 module.process(function() {

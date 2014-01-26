@@ -7,6 +7,7 @@ module.config({
 module.process(function() {
     speak(module.input("data").toString(), {
         wordgap: 1,
-        speed: 150
+        speed: 160,
+        amplitude: 150
     });
 });

@@ -6,8 +6,9 @@ module.config({
 });
 
 module.process(function() {
-  xhr = $.post('/wunderground/alerts', {
-      local: module.input('location')});
+    xhr = $.post('/wunderground/alerts', {
+        local: module.input('location')
+    });
 
     xhr.done(function(data) {
         if (!data.alerts)
