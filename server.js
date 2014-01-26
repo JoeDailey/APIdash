@@ -87,7 +87,7 @@ app.post('/espn/:function', function(req, res) {
         case 'headlines':
             var url = espnsite + "sports/news/headlines?limit=1&apikey=" + espnapikey;
             $.get(url, function(data) {
-                res.json(data.headlines[0].headline);
+                res.json(data.headlines);
             });
     }
 });
@@ -216,7 +216,7 @@ app.post('/twitter/:function', function(req, res) {
             });
             break;
         case 'search':
-            twit.get('/search/tweets.json?q=' + req.body.q, {
+            twit.get('/search/tweets.json?q=' + req.body.q+'&count='+req.body.count, {
                 include_entities: true
             }, function(data) {
                 res.send(300, data);
@@ -320,7 +320,7 @@ var GETcallback = function(url, res, sucs) {
 }
 
 
- 
+
 //URL bases///////////////////////////////////////////////////////////
 var wunderground = "http://api.wunderground.com/api/cdde5330c637ed40/";
 var rotten = "http://api.rottentomatoes.com/api/public/v1.0/movies";
