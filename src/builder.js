@@ -268,9 +268,10 @@
         this.update();
         this.conn = new Connection(from.module, from.name, to.module, to.name);
         var self = this;
+
         this.conn.onValue = function() {
-            self.container.alpha = 0.7;
-            G.Tween.get(self.container).to({alpha: 1}, 750);
+            self.container.alpha = 0.4;
+            G.Tween.get(self.container).to({alpha: 1}, 750, G.Ease.sineIn);
         };
     };
 
@@ -447,7 +448,10 @@
             });
 
             $("#left-main-panel").append($('<button id="run">Run</button>'));
-
+            $('#run').click(function() {
+                var r = new ModuleRunner(_.map(modules, function(m) { return m.module }));
+                r.run();
+            });
         });
 
         G.Ticker.setFPS(30);
@@ -455,10 +459,6 @@
             stage.update();
         });
 
-        $('#run').click(function() {
-            var r = new ModuleRunner(_.map(modules, function(m) { return m.module }));
-            r.run();
-        });
     };
 
 })();

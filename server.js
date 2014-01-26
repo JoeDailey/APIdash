@@ -309,9 +309,7 @@ var GETcallback = function(url, res, sucs) {
             });
         }
     });
-}
-
-
+};
 
 //URL bases///////////////////////////////////////////////////////////
 var wunderground = "http://api.wunderground.com/api/cdde5330c637ed40/";
