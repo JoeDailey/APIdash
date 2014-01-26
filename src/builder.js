@@ -2,14 +2,6 @@
 
     var G = createjs;
 
-    //colors
-    ccanvas = "#FFFFFF";
-    cboxinner = "#ABCDEF";
-    cboxouter = "#9999FF";
-    cportinner = "#8888FF";
-    cportouter = "#6666DD";
-    cportcircle = "#000088";
-
     var createStage = function(width, height) {
         var canvas = $('<canvas width="'+width+'" height="'+height+'"></canvas>').get(0);
         var ctx = canvas.getContext('2d');
