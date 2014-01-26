@@ -1,7 +1,8 @@
 module.config({
     'name': 'If A Equal To B',
     'inputs': ['A', 'B'],
-    'outputs': 'A'
+    'outputs': 'A',
+    'category': 'adsadasd'
 });
 
 module.process(function() {

@@ -2,8 +2,6 @@ var $ = require('jQuery');
 
 var util = require('util');
 
-var reddit = require("rereddit");
-
 var dbox = require("dbox");
 var app = dbox.app({
     "app_key": "khf2wcgta1uewtj",
@@ -221,7 +219,7 @@ app.post('/twitter/:function', function(req, res) {
             });
             break;
         case 'search':
-            twit.get('/search/tweets.json?q=' + req.body.q+'&count='req.body.count, {
+            twit.get('/search/tweets.json?q=' + req.body.q+'&count='+req.body.count, {
                 include_entities: true
             }, function(data) {
                 res.send(300, data);
@@ -327,7 +325,7 @@ var GETcallback = function(url, res, sucs) {
 }
 
 
- 
+
 //URL bases///////////////////////////////////////////////////////////
 var wunderground = "http://api.wunderground.com/api/cdde5330c637ed40/";
 var rotten = "http://api.rottentomatoes.com/api/public/v1.0/movies";
