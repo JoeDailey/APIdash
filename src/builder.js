@@ -49,7 +49,7 @@
         var c = this.container = new G.Container;
 
         var s = new G.Shape();
-        s.graphics.f('#abcdef').ss(1).s('#00');
+        s.graphics.f('#abcdef').ss(1).s('#000');
         var rad = connHeight / 2;
         if (isInput)
             s.graphics.drawRoundRectComplex(0, 0, connWidth, connHeight, rad, 0, 0, rad);
@@ -159,9 +159,19 @@
 
     var drawWire = function(g, fromx, fromy, tox, toy) {
         g.clear();
-        g.ss(3).s('#444')
+
+        g.f('#444').drawCircle(fromx, fromy, pinRadius)
+            .drawCircle(tox, toy, pinRadius).ef();
+
+        g.ss(pinRadius).s('#444')
             .moveTo(fromx, fromy)
-            .lineTo(tox, toy);
+            .bezierCurveTo(
+                (fromx * 1 + tox * 1) / 2,
+                fromy,
+                (fromx * 1 + tox * 1) / 2,
+                toy,
+                tox,
+                toy);
     };
 
     var Wire = function(from, to) {
@@ -238,6 +248,7 @@
                 if (port.pin.hasEventListener("click"))
                     return;
                 port.pin.on("click", function (evt) {
+
                     evt.stopPropagation();
                     if (!srcPort) {
                         if (port.wire)
@@ -248,6 +259,8 @@
                             clearWiring();
                             return;
                         }
+                        if (port.wire)
+                            port.wire.remove();
                         var w = new Wire(srcPort, port);
                         wireContainer.addChild(w.container);
                         clearWiring();
