@@ -426,7 +426,7 @@
 
             _.each(sortedCats, function (catName) {
                 var mods = cats[catName];
-                var cat = $('<button>' + catName + '</button>').appendTo($('#left-main-panel'));
+                var cat = $('<button class="menu">' + catName + '</button>').appendTo($('#left-main-panel'));
 
                 var submenu = $('<div></div>').appendTo($('#left-sub-panel'));
                 _.each(mods, function(mod) {
@@ -445,6 +445,8 @@
                         openedCat = null;
                 });
             });
+
+            $("#left-main-panel").append($('<button id="run">Run</button>'));
 
         });
 

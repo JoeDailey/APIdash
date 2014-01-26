@@ -94,7 +94,7 @@ canvas { border: 1px solid #aaa; }
   left:5px;
   top:5px;
 }
-#left-main-panel button {
+#left-main-panel button.menu {
   width:100%;
   background-color:#b8e356;
   text-indent:0;
@@ -120,7 +120,7 @@ canvas { border: 1px solid #aaa; }
   background:rgba(0,0,0,0.2);
   float:left;
 }
-#left-main-panel button:hover {
+#left-main-panel button.menu:hover {
   background-color:#a5cc52;
 }
 #left-main-panel button:active {
@@ -166,4 +166,21 @@ canvas { border: 1px solid #aaa; }
 #right-content {
   float: left;
   padding:15px;
+}
+#run {
+  display: block;
+  width: 100px;
+  margin: 10px auto;
+  font-size: 20px;
+  background-color: #8BA1E5;
+  border: 0 none;
+  cursor: pointer;
+  box-shadow: 1px 1px 0px #206a9a;
+  color: white;
+  text-shadow: 0 1px black;
+  font-weight: bold;
+}
+
+#run:hover {
+  background-color: #7A90D4;
 }
