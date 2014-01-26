@@ -6,125 +6,21 @@
     <title>APIDash</title>
 
     <link rel="stylesheet" href="/static/jquery-ui.css" media="all" type="text/css" />
+    <link rel="stylesheet" href="/static/style.css" media="all" type="text/css" />
 
-    <style type="text/css">
-      body {
-        margin: 10px;
-        -webkit-touch-callout: none;
-        -webkit-user-select: none;
-        -khtml-user-select: none;
-        -moz-user-select: none;
-        -ms-user-select: none;
-        user-select: none;
-      }
-      * { box-sizing: border-box; }
-      .ui-dialog, #codemodal { overflow: hidden; }
-      canvas { border: 1px solid #aaa; }
-      #codemodal { padding: 0; padding-left: 5px; padding-top: 7px; }
-      #codemodal textarea { width: 100%; height: 100%; margin: 0; padding: 3px; outline: none;  border: 1px solid #aaa; }
-      #codemodal textarea.error { border: 1px solid #ff0000; }
-      .ui-dialog-titlebar { padding: 1px 5px !important; }
-      .ui-dialog textarea {
-        font-family: 'lucida console', monaco, monospace;
-        font-size: 11px;
-      }
-      #console{
-        border:solid 1px #aaa;
-        padding:5px;
-        margin-top:5px;
-        margin-bottom:5px;
-        width:642px;
-        height:80px;
-        overflow-y:scroll;
-      }
-      .inp input {
-        background: none;
-        border: none;
-        padding: 2px 2px;
-      outline: none;
-      }
-      #left-panel{
-        float:left;
-        height: 100%;
-      }
-      #left-main-panel{
-        height:100%;
-        width:200px;
-        background: rgba(0,0,0,0.3);
-        float: left;
-      }
-      #left-med-panel{
-        width: 10px;
-        box-shadow: 0 0 5px inset;
-        float: left;
-        height: 100%;
-      }
-      #left-main-panel button{
-        width:100%;
-        background-color:#b8e356;
-        -webkit-border-top-left-radius:0px;
-        -moz-border-radius-topleft:0px;
-        border-top-left-radius:0px;
-        -webkit-border-top-right-radius:0px;
-        -moz-border-radius-topright:0px;
-        border-top-right-radius:0px;
-        -webkit-border-bottom-right-radius:0px;
-        -moz-border-radius-bottomright:0px;
-        border-bottom-right-radius:0px;
-        -webkit-border-bottom-left-radius:0px;
-        -moz-border-radius-bottomleft:0px;
-        border-bottom-left-radius:0px;
-        text-indent:0;
-        border:1px solid #83c41a;
-        display:inline-block;
-        color:#ffffff;
-        font-family:Arial;
-        font-size:15px;
-        font-weight:bold;
-        font-style:normal;
-        line-height:65px;
-        margin: 0px;
-        text-decoration:none;
-        text-align:center;
-        text-shadow:1px 1px 0px #86ae47;
-      }
-      #left-main-panel button:hover {
-        background-color:#a5cc52;
-      }
-      #left-main-panel button:active {
-        position:relative;
-        top:1px;
-      }
-      #left-sub-panel{
-        height: 100%;
-        background:#f3f;
-        float:left;
-      }
-      .left-buttons{
-        display: block;
-      }
-      .left-sub-buttons{
-        display: none;
-      }
-      #right-content{
-        float: left;
-        padding:15px;
-      }
-      html, body{
-        height: 100%;
-        padding: 0;
-        margin:0;
-      }
-      body{
-        display: inline-block;
-      }
-    </style>
   </head>
   <body>
+    <div id="left-shower-bar" class="left-hider-shower">
+      <div id="left-shower">&#9776;</div>
+    </div>
     <div id="left-panel">
       <div id="left-main-panel">
+        <div id="left-bar" class="left-hider-shower">
+          <div id="left-hider">&#9776;</div>
+          <div style="float:left">APIdash</div>
+        </div>
         <button class="left-button" id="wunderground">Wunderground</button>
-        <button class="left-button" id="wunder">Wunderground</button>
+        <button class="left-button" id="wunder">asdf</button>
       </div>
       <div id="left-med-panel"></div>
       <div id="left-sub-panel">
@@ -138,9 +34,14 @@
         <textarea></textarea>
       </div>
 
-      <div id="container">
-        
+      <div class="cf">
+        <div id="modules">
+          <h2>Modules</h2>
+
+        </div>
+        <div id="container"></div>
       </div>
+
       <button id="run">run</button>
       <div id="console"></div>
     </div>
@@ -149,11 +50,14 @@
     <script>
       $("#codemodal").dialog({autoOpen: false, width: 500, height: 300});
       APIDash.createBuilder('#container');
-
       $(document).ready(function() {
         $('.left-button').click(function(){
-          $(".left-sub-buttons").hide();
-          $("#"+$(this).attr('id')+"-sub").show();
+          $(".left-sub-buttons").hide(150);
+          $("#"+$(this).attr('id')+"-sub").show(200);
+        });
+        $('.left-hider-shower').click(function(){
+          $("#left-panel").toggle(250);
+          $("#left-shower-bar").toggle(250);
         });
       });
     </script>
