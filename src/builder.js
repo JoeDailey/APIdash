@@ -80,6 +80,9 @@
         text.regY = text.getBounds().height / 2;
         text.x = isInput ? connWidth - text.getBounds().width - 5 : 5;
         c.addChild(text);
+
+        text.mouseEnabled = false;
+        pin.mouseEnabled = false;
     };
 
     BuilderPort.prototype.pinPos = function() {
