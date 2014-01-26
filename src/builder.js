@@ -269,7 +269,6 @@
         this.conn = new Connection(from.module, from.name, to.module, to.name);
         var self = this;
         this.conn.onValue = function() {
-            console.log('hi');
             self.container.alpha = 0.7;
             G.Tween.get(self.container).to({alpha: 1}, 750);
         };

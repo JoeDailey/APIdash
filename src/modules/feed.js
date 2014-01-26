@@ -1,10 +1,11 @@
 module.config({
-	'name': 'Your Feed',
-	'outputs': 'feed'
+    'name': 'Your Twitter',
+    'outputs': 'feed',
+    'category': 'Data Providers'
 });
 
 module.process(function() {
-	utils.api('twitter/feed', {}, function(data) {
-		module.output('feed',data);
-	});
+    utils.api('twitter/feed', {}, function(data) {
+        module.output('feed', data);
+    });
 });
