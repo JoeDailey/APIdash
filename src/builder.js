@@ -267,6 +267,12 @@
         this.g = this.container.graphics;
         this.update();
         this.conn = new Connection(from.module, from.name, to.module, to.name);
+        var self = this;
+        this.conn.onValue = function() {
+            console.log('hi');
+            self.container.alpha = 0.7;
+            G.Tween.get(self.container).to({alpha: 1}, 750);
+        };
     };
 
     Wire.prototype.update = function() {
@@ -315,14 +321,13 @@
         };
 
         stage.on('stagemousemove', function (evt) {
-            console.log(stage.getObjectUnderPoint(evt.stageX / stage.ratio, evt.stageY / stage.ratio));
             if (srcPort) {
                 var pos = srcPort.pinPos();
                 drawWire(wire.graphics, pos.x, pos.y, evt.stageX / stage.ratio, evt.stageY / stage.ratio);
             }
         });
 
-        bg.on('click', clearWiring());
+        stage.on('click', clearWiring);
 
         var editing = null, oldCode = '';
 
