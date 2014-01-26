@@ -6,7 +6,9 @@ module.config({
 });
 
 module.process(function() {
-    if (module.input("A").toLowerCase().indexOf(module.input("B").toLowerCase()) != -1) {
+    var a = module.input('A').toString().toLowerCase(),
+        b = module.input('B').toString().toLowerCase();
+    if (a.indexOf(b) != -1) {
         module.send("A", module.input("A"));
     }
 });
