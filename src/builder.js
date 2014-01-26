@@ -34,12 +34,12 @@
 
     var titleHeight = 25,
         bodyWidth = 120,
-        connWidth = 70,
+        connWidth = 82,
         connHeight = 20,
         connSpace = connHeight + 4,
         pinMargin = 3,
         pinRadius = (connHeight - pinMargin * 2) / 2,
-        connProtrude = pinRadius * 2 + 4;
+        connProtrude = pinRadius * 2 + 10;
 
     var BuilderPort = function(module, name, isInput) {
         this.module = module;
@@ -47,8 +47,8 @@
         this.name = name;
 
         var c = this.container = new G.Container;
-
-        var s = new G.Shape();
+        //long thing
+        var s = this.s = new G.Shape();
         s.graphics.f('#98b7ef');
         var rad = connHeight / 2;
         /*
@@ -80,6 +80,9 @@
         text.regY = text.getBounds().height / 2;
         text.x = isInput ? connWidth - text.getBounds().width - 5 : 5;
         c.addChild(text);
+
+        text.mouseEnabled = false;
+        pin.mouseEnabled = false;
     };
 
     BuilderPort.prototype.pinPos = function() {
@@ -101,7 +104,6 @@
         c.y = 50;
         stage.addChild(c);
         this.ports = [];
-        this.update();
 
         var self = this;
         this.module.onChange = function(portsChanged) {
@@ -110,6 +112,22 @@
             else
                 self.text.text = self.module.name;
         };
+
+        var del = this.delbtn = new G.Shape;
+        del.graphics.ss(3).s('#333').moveTo(0, 0).lineTo(8, 8)
+            .moveTo(8, 0).lineTo(0, 8).es();
+
+        var hit = new G.Shape;
+        hit.graphics.beginFill('#000').drawRect(-1, -1, 9, 9);
+        del.hitArea = hit;
+        del.alpha = 0.7;
+        del.on('mouseover', function() { del.alpha = 1; });
+        del.on('mouseout', function() { del.alpha = 0.7; });
+
+        del.x = connProtrude + bodyWidth - 13;
+        del.y = 5;
+
+        this.update();
     };
 
     BuilderModule.prototype.removeConnections = function() {
@@ -130,21 +148,7 @@
         var body = new G.Shape;
         c.addChild(body);
 
-        var del = this.delbtn = new G.Shape;
-        del.graphics.ss(3).s('#333').moveTo(0, 0).lineTo(8, 8)
-            .moveTo(8, 0).lineTo(0, 8).es();
-
-        var hit = new G.Shape;
-        hit.graphics.beginFill('#000').drawRect(-1, -1, 9, 9);
-        del.hitArea = hit;
-
-        del.alpha = 0.7;
-        del.on('mouseover', function() { del.alpha = 1; });
-        del.on('mouseout', function() { del.alpha = 0.7; });
-
-        c.addChild(del);
-        del.x = connProtrude + bodyWidth - 13;
-        del.y = 5;
+        c.addChild(this.delbtn);
 
         // Using drawing shortcuts
         // f = fill, ss = stroke size, s = begin stroke, r = rect
@@ -270,9 +274,9 @@
 
         var setupPorts = function(bm) {
             _.each(bm.ports, function (port) {
-                if (port.pin.hasEventListener("click"))
+                if (port.s.hasEventListener("click"))
                     return;
-                port.pin.on("click", function (evt) {
+                port.s.on("click", function (evt) {
 
                     evt.stopPropagation();
                     if (!srcPort) {
