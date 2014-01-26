@@ -46,24 +46,27 @@ var Module = function() {
     this.fired = false;
 
     var self = this;
+};
 
-    self.input = function(key) {
-        return self.inputs[key].val;
-    };
 
-    self.send = function(output, data) {
-        self.outputs[output].setVal(data);
-    };
+Module.prototype.input = function(key) {
+    return this.inputs[key].val;
+};
 
-    self.hasValidInputs = function() {
-        return _.every(self.inputs, function(conn) {
-            return conn.hasValue();
-        });
-    };
+Module.prototype.send = function(output, data) {
+    this.outputs[output].setVal(data);
+};
 
-    self.input = function(name) {
-        return self.inputs[name].getValue();
-    };
+Module.prototype.hasValidInputs = function() {
+    return _.every(this.inputs, function(conn) {
+        return conn && conn.hasValue();
+    });
+};
+
+Module.prototype.input = function(name) {
+    if (this.inputs[name] == null)
+        return null;
+    return this.inputs[name].getValue();
 };
 
 Module.prototype.run = function() {
@@ -109,7 +112,7 @@ Module.prototype.compile = function() {
 
     script({
         'module': this,
-        'utils': ModuleUtils
+        'utils': new ModuleUtils(this)
     });
 
     if (JSON.stringify(oldInputs)!=JSON.stringify(this.inputList) ||
