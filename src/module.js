@@ -112,6 +112,8 @@ Module.prototype.process = function(func) {
 
 Module.prototype.compile = function() {
     var script = "with (scope) {\n" + this.source + "\n}";
+
+    console.log(script);
     script = Function('scope', script);
 
     var oldInputs = this.inputList,
