@@ -1,6 +1,6 @@
 module.config({
-    'name': 'subreddit',
-    'inputs': 'subreddit',
+    'name': 'Subreddit',
+    'inputs': 'Subreddit',
     'outputs': 'data',
     'category': 'Data Providers'
 });
@@ -8,7 +8,7 @@ module.config({
 module.process(function() {
     var subreddit = module.input("subreddit");
     var data = {};
-    utils.api('reddit/'+subreddit, data, function(data){
-    	module.output('result', data);
+    utils.api('reddit/' + subreddit, data, function(data) {
+        module.output('result', data);
     });
 });
