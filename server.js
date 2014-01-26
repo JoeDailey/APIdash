@@ -221,7 +221,7 @@ app.post('/twitter/:function', function(req, res) {
             });
             break;
         case 'search':
-            twit.get('/search/tweets.json?q=' + req.body.q+'&count='req.body.count, {
+            twit.get('/search/tweets.json?q=' + req.body.q+'&count='+req.body.count, {
                 include_entities: true
             }, function(data) {
                 res.send(300, data);
