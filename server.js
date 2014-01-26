@@ -266,9 +266,14 @@ app.post('/whisper/:func', function(req, res){
 app.post('/dropbox/:func', function(req, res){
 	if(req.params.func == "write"){
 		dbclient.put(req.body.filename, req.body.content, {root:"dropbox",overwrite:"false"}, function(status, reply){
-			res.send(200,'yah');
+			res.send(200,{'message':success});
 		})
 	}
+});
+
+app.post('/cnet', function(req, res){
+	var url = 'http://developer.api.cnet.com/rest/v1.0/techProduct?productId='+req.body.id+'&iod=none&viewType=json&partTag=43zw4zhq8adnxex35amrdbw4';
+	GET(url,res);
 });
 
 
