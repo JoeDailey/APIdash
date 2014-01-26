@@ -145,29 +145,29 @@
 		"API":"Twitter",
 		"functions":[
 			{
-				"route":"tweet",
+				"route":"/tweet",
 				"params":[
 					"message"
 				]
 			},
 			{
-				"route":"feed",
+				"route":"/feed",
 				"params":[
 				]
 			},
 			{
-				"route":"user",
+				"route":"/user",
 				"params:[
 				]
 			},
 			{
-				"route":"search",
+				"route":"/search",
 				"params":[
 					"q"
 				]
 			},
 			{
-				"route":"sample",
+				"route":"/sample",
 				"params":[
 				]
 			}
@@ -307,6 +307,15 @@
 				]
 			}
 		]
+	},
+	{
+		"API":"CNET",
+		"functions":[
+			{
+				"route":"/",
+				"params":[
+				]
+			}
 	},
 	{
 		"API":"Wisper",

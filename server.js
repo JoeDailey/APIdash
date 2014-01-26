@@ -271,7 +271,7 @@ app.post('/dropbox/:func', function(req, res){
 	}
 });
 
-app.post('/cnet', function(req, res){
+app.post('/cnet/', function(req, res){
 	var url = 'http://developer.api.cnet.com/rest/v1.0/techProduct?productId='+req.body.id+'&iod=none&viewType=json&partTag=43zw4zhq8adnxex35amrdbw4';
 	GET(url,res);
 });
