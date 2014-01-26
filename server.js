@@ -110,27 +110,27 @@ app.post('/digitalocean/:func', function(req, res){
 		if(req.body.drop_ssh_keys != undefined) opt1 = "&ssh_key_ids="+req.body.drop_ssh_keys;
 		if(req.body.private_networking != undefined) opt2 = "&private_networking="+req.body.drop_private_networking;
 		if(req.body.backups_enabled != undefined) opt3 = "&backups_enabled="+req.body.drop_backups_enabled;
-		GET(digital+"new"+shark+req.body.client_id+ocean+"&name="+req.body.drop_name+"&size_id="+req.body.drop_size_id+"&image_id="+req.body.drop_image_id+"&region_id="+req.body.drop_region_id+opt1+opt2+opt3, res);
+		GET(digital+"new"+shark+req.body.client_id+ocean+req.body.drop_api_key+"&name="+req.body.drop_name+"&size_id="+req.body.drop_size_id+"&image_id="+req.body.drop_image_id+"&region_id="+req.body.drop_region_id+opt1+opt2+opt3, res);
 	}
 	else if(req.params.func == "list"){
-		GET(digital+shark+req.body.client_id+ocean, res);
+		GET(digital+shark+req.body.client_id+ocean+req.body.drop_api_key, res);
 	}
 	else if(req.params.func == "resize"){
-		GET(digital+req.body.droplet_id+"/"+req.params.func+shark+req.body.client_id+ocean+"size_id="+req.body.drop_size_id, res);
+		GET(digital+req.body.droplet_id+"/"+req.params.func+shark+req.body.client_id+ocean+req.body.drop_api_key+"&size_id="+req.body.drop_size_id, res);
 	}
 	else if(req.params.func == "restore" || req.params.func == "rebuild"){
-		GET(digital+req.body.droplet_id+"/"+req.params.func+shark+req.body.client_id+ocean+"image_id="+req.body.drop_image_id, res);
+		GET(digital+req.body.droplet_id+"/"+req.params.func+shark+req.body.client_id+ocean+req.body.drop_api_key+"&image_id="+req.body.drop_image_id, res);
 	}
 	else if(req.params.func == "rename"){
-		GET(digital+req.body.droplet_id+"/"+req.params.func+shark+req.body.client_id+ocean+"name="+req.body.drop_name, res);
+		GET(digital+req.body.droplet_id+"/"+req.params.func+shark+req.body.client_id+ocean+req.body.drop_api_key+"&name="+req.body.drop_name, res);
 	}
 	else if(req.params.func == "rename"){
 		var opt1 = ""
 		if(req.body.drop_scrub_data != undefined) opt1 = "&scrub_data="+req.body.drop_scrub_data;
-		GET(digital+req.body.droplet_id+"/"+req.params.func+shark+req.body.client_id+ocean+opt1, res);
+		GET(digital+req.body.droplet_id+"/"+req.params.func+shark+req.body.client_id+ocean+req.body.drop_api_key+opt1, res);
 	}
 	else{
-		GET(digital+req.body.droplet_id+"/"+req.params.func+shark+req.body.client_id+ocean, res);
+		GET(digital+req.body.droplet_id+"/"+req.params.func+shark+req.body.client_id+ocean+req.body.drop_api_key, res);
 	}
 });
 app.post('/sendgrid/send', function(req, res){
@@ -288,7 +288,7 @@ var espnsite = "http://api.espn.com/v1/";
 var espnapikey = "q37qt8hvvk83u9ppwymr9d2g";
 var digital = "https://api.digitalocean.com/droplets/";
 var shark = "?client_id=";
-var ocean = "&api_key=dfcefb37223cd8206e6a194999a5dae1";
+var ocean = "&api_key=";//dfcefb37223cd8206e6a194999a5dae1
 var whisper = "https://hackproxy.whisper.sh/";
 var sendgrid_key = "agressivepizza1";
 var sendgrid_user = "apidash";
