@@ -34,6 +34,7 @@ var twit = new twitter({
 });
 var express = require('express');
 var app = express();
+app.set('view engine', 'ejs');
 
 app.use('/static', express.static(__dirname + '/static'));
 app.use(express.bodyParser());
@@ -45,7 +46,7 @@ app.set('views', __dirname + '/views');
 app.engine('.html', require('ejs').__express);
 
 app.get('/', function(req, res) {
-    res.render('index.html');
+    res.render('index', {});
 });
 
 //Wunderground////////////////////////////////////////////////////////////////////////
