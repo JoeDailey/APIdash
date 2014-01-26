@@ -1,6 +1,7 @@
 module.config({
     'name': 'Resize  Droplet',
-    'inputs': ['size', 'client id', 'droplet id', 'api key']
+    'inputs': ['size', 'client id', 'droplet id', 'api key'],
+    'category': 'Actions'
 });
 
 module.process(function() {

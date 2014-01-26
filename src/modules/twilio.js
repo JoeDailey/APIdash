@@ -1,12 +1,11 @@
 
 module.config({
     'name': 'Send Text',
-    'inputs': ['to', 'message']
+    'inputs': ['to', 'message'],
+    'category': 'Actions'
 });
 
 module.process(function() {
-
-
     var inp = module.input('to');
     if (inp.length > 0 && inp.charAt(0) != '+')
         inp = '+1' + inp;

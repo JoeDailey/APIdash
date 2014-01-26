@@ -1,6 +1,7 @@
 module.config({
     'name': 'Hello World',
-    'outputs': 'out'
+    'outputs': 'out',
+    'category': 'Misc'
 });
 
 module.process(function() {

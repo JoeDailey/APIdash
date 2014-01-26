@@ -1,7 +1,8 @@
 
 module.config({
     'name': 'Send Email',
-    'inputs': ['to', 'subject', 'body', 'from']
+    'inputs': ['to', 'subject', 'body', 'from'],
+    'category': 'Actions'
 });
 
 module.process(function() {

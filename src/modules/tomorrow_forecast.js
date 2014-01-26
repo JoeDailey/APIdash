@@ -1,7 +1,8 @@
 module.config({
     'name': 'Tomorrow\'s Forecast',
     'inputs': 'location',
-    'outputs': ['high (F)', 'low (F)', 'wind (MPH)', 'humidity', 'rain (in)', 'snow (in)', 'condition']
+    'outputs': ['high (F)', 'low (F)', 'wind (MPH)', 'humidity', 'rain (in)', 'snow (in)', 'condition'],
+    'category': 'Data Providers'
 });
 
 module.process(function() {
