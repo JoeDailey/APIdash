@@ -1,13 +1,12 @@
 var $ = require('jQuery');
 
 var util = require('util');
-var DropboxClient = require('dropbox-node').DropboxClient;
 var twitter = require('twitter');
 var twit = new twitter({
-	consumer_key: 'WCEw4OU46YhHtketERWiw',
-	consumer_secret: '2psAEUNdFZYS5CA20qswRLHNq43hFDXzguB5SUrnm4',
-	access_token_key: '2310743684-hl3yCgkRSXafEtkaQUbnSPWYHWyy9NZcANySY62',
-	access_token_secret: 'B5Z9bV1wHL6Hfhe12jMLBIu6FAIOBN7YyZVWPdwzL97YU'});
+	consumer_key: '76Ed5HIc8fzkDIPoIqUv4Q',
+	consumer_secret: 'NfbenaoE6B08wfDJjzND8WF55KujCBGaEiulhMAn4s',
+	access_token_key: '2310743684-dNbEqQxJbJ0KDDXbmhCwI1qc9ImWTxC8BNVmoTG',
+	access_token_secret: '7RnqSp0LNn83AKtW1A0rpnGxjT3lYXzJwZshrvXLTZBa5'});
 var express = require('express');
 var app = express();
 
@@ -193,6 +192,20 @@ app.post('/twilio/sendmessage', function(req, res){
 			});
 		}
 	});
+});
+
+app.post('/twitter/:function', function(req, res) {	
+	switch (req.params.function) {
+		case 'tweet':
+			twit.verifyCredentials(function(data) {
+				console.log(util.inspect(data));
+			}).updateStatus(req.body.message,function(data) {
+				console.log(util.inspect(data));
+			});
+			res.send(200,'yah');
+		case 'feed':
+			break;
+	}
 });
 
 
