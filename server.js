@@ -40,33 +40,11 @@ app.get('/', function(req, res) {
 });
 
 //Wunderground////////////////////////////////////////////////////////////////////////
-app.get('/wunderground', function(req, res) {
-	res.send([
-		"alerts",
-		"almanac",
-		"astronomy",
-		"conditions",
-		"currenthurricane",
-		"forecast",
-		"forecast10day",
-		"geolookup",
-		"history",
-		"hourly",
-		"hourly10day",
-		"planner",
-		"rawtide",
-		"satellite",
-		"tide",
-		"webcams",
-		"yesterday"]);
-});
-
 app.post('/wunderground/:func', function(req, res) { //cdde5330c637ed40
     GET(wunderground+req.params.func+"/q/"+req.body.local+".json", res);
 });
 
 //ESPN//////////////////////////////////////////////////////////////////////////////////
-
 app.post('/espn/:function', function(req, res) {
 	switch (req.params.function) {
 		case 'now':
@@ -157,8 +135,8 @@ app.post('/digitalocean/:func', function(req, res){
 });
 app.post('/sendgrid/send', function(req, res){
 	var json = {
-				api_user:req.body.api_user,
-				api_key:req.body.api_key,
+				api_user:sendgrid_user,
+				api_key:sendgrid_key,
 				to:req.body.to,
 				subject:req.body.subject,
 				text:req.body.text,
@@ -312,3 +290,5 @@ var digital = "https://api.digitalocean.com/droplets/";
 var shark = "?client_id=";
 var ocean = "&api_key=dfcefb37223cd8206e6a194999a5dae1";
 var whisper = "https://hackproxy.whisper.sh/";
+var sendgrid_key = "agressivepizza1";
+var sendgrid_user = "apidash";
