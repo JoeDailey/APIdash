@@ -4,11 +4,7 @@ module.config({
 });
 
 module.process(function() {
-	xhr = $.post('/twitter/feed');
-
-	xhr.done(function(data)) {
-		if (data) {
-			module.send('feed',data);
-		}
+	util.api('twitter/feed', {}, function(data) {
+		module.output('feed',data);
 	});
 });
