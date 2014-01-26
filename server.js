@@ -220,7 +220,7 @@ app.post('/twitter/:function', function(req, res) {
 				res.send(300,data);
 			});
 		case 'search':
-			twit.get('/search/tweets.json?q='req.body.q,{include_entities:true}, function(data) {
+			twit.get('/search/tweets.json?q='+req.body.q,{include_entities:true}, function(data) {
 				res.send(300,data);
 			});
 		case 'sample':
