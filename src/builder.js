@@ -34,12 +34,12 @@
 
     var titleHeight = 25,
         bodyWidth = 120,
-        connWidth = 70,
+        connWidth = 82,
         connHeight = 20,
         connSpace = connHeight + 4,
         pinMargin = 3,
         pinRadius = (connHeight - pinMargin * 2) / 2,
-        connProtrude = pinRadius * 2 + 4;
+        connProtrude = pinRadius * 2 + 10;
 
     var BuilderPort = function(module, name, isInput) {
         this.module = module;
@@ -80,6 +80,9 @@
         text.regY = text.getBounds().height / 2;
         text.x = isInput ? connWidth - text.getBounds().width - 5 : 5;
         c.addChild(text);
+
+        text.mouseEnabled = false;
+        pin.mouseEnabled = false;
     };
 
     BuilderPort.prototype.pinPos = function() {
