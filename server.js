@@ -210,24 +210,26 @@ app.post('/twitter/:function', function(req, res) {
 				console.log(util.inspect(data));
 				res.send(300,{'data':data});
 			});
+			break;
 		case 'feed':
 			twit.get('/statuses/home_timeline.json',{include_entities:true}, function(data) {
 				res.send(300,data);
 			});
+			break;
 		case 'user':
 			twit.get('/statuses/user_timeline.json',{include_entities:true}, function(data) {
 				res.send(300,data);
 			});
+			break;
 		case 'search':
 			twit.get('/search/tweets.json?q='+req.body.q,{include_entities:true}, function(data) {
 				res.send(300,data);
 			});
+			break;
 		case 'sample':
 			twit.get('/statuses/sample.json',{include_entites:true}, function(data) {
 				res.send(300,data);
 			});
-		//	break;
-
 	}
 });
 app.post('/whisper/:func', function(req, res){
