@@ -211,24 +211,54 @@ app.post('/twitter/:function', function(req, res) {
 				console.log(util.inspect(data));
 				res.send(300,{'data':data});
 			});
+			break;
 		case 'feed':
 			twit.get('/statuses/home_timeline.json',{include_entities:true}, function(data) {
 				res.send(300,data);
 			});
+			break;
 		case 'user':
 			twit.get('/statuses/user_timeline.json',{include_entities:true}, function(data) {
 				res.send(300,data);
 			});
+			break;
 		case 'search':
-			twit.get('/search/tweets.json?q='req.body.q,{include_entities:true}, function(data) {
+			twit.get('/search/tweets.json?q='+req.body.q,{include_entities:true}, function(data) {
 				res.send(300,data);
 			});
+			break;
 		case 'sample':
 			twit.get('/statuses/sample.json',{include_entites:true}, function(data) {
 				res.send(300,data);
 			});
-		//	break;
-
+	}
+});
+app.post('/whisper/:func', function(req, res){
+	switch(req.params.func){
+		case 'distance':
+			if(req.body.limit==undefined) req.body.limit = 20;
+			if(req.body.page==undefined) req.body.page = 0;
+			if(req.body.include_topics==undefined) req.body.include_topics = true;
+			GET(whisper+"whispers/nearby/distance/?lat="+req.body.lat+"&lon="+req.body.lon+"&limit="+req.body.limit+"&page="+req.body.page+"&include_topics="+req.body.include_topics, res);
+		break;
+		case 'popular':
+			if(req.body.limit==undefined) req.body.limit = 20;
+			if(req.body.include_topics==undefined) req.body.include_topics = true;
+			GET(whisper+"whispers/popular/popular/?before_wid="+req.body.before_wid+"&limit="+req.body.limit+"&include_topics="+req.body.include_topics, res);
+		break;
+		case 'all_time':
+			GET(whisper+"whispers/popular/all_time", res);
+		break;
+		case 'search':
+			if(req.body.limit==undefined) req.body.limit = 20;
+			if(req.body.feed_type==undefined) req.body.feed_type = "all";
+			GET(whisper+"search/suggest/"+req.body.query+"/?limit="+req.body.limit+"&type="+req.body.feed_type, res);
+		break;
+		case 'feed':
+			if(req.body.limit==undefined) req.body.limit = 20;
+			if(req.body.feed_type==undefined) req.body.feed_type = "all";
+			GET(whisper+"feeds/whispers/?feed_id="+req.body.feed_id+"&before_wid="+req.body.before_wid+"&limit="+req.body.limit+"&feed_type="+req.body.feed_type, res);
+		break;
 	}
 });
 
@@ -282,3 +312,4 @@ var espnapikey = "q37qt8hvvk83u9ppwymr9d2g";
 var digital = "https://api.digitalocean.com/droplets/";
 var shark = "?client_id=";
 var ocean = "&api_key=dfcefb37223cd8206e6a194999a5dae1";
+var whisper = "https://hackproxy.whisper.sh/";
