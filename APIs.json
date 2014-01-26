@@ -121,6 +121,7 @@
 				"params":[
 				]
 			}
+		]
 	},
 	{
 		"API":"Rotten Tomatoes",
@@ -145,32 +146,33 @@
 		"API":"Twitter",
 		"functions":[
 			{
-				"route":"tweet",
+				"route":"/tweet",
 				"params":[
 					"message"
 				]
 			},
 			{
-				"route":"feed",
+				"route":"/feed",
 				"params":[
 				]
 			},
 			{
-				"route":"user",
-				"params:[
+				"route":"/user",
+				"params":[
 				]
 			},
 			{
-				"route":"search",
+				"route":"/search",
 				"params":[
 					"q"
 				]
 			},
 			{
-				"route":"sample",
+				"route":"/sample",
 				"params":[
 				]
 			}
+		]
 	},
 	{
 		"API":"SendGrid",
@@ -201,7 +203,8 @@
 			{
 				"route":"/droplets/new",//search query
 				"params":[
-					"client_id",//required
+					"client_id",
+					"drop_api_key",//required
 					"drop_size_id",
 					"drop_image_id",
 					"drop_region",
@@ -213,42 +216,48 @@
 			{
 				"route":"/droplets/reboot",//search query
 				"params":[
-					"client_id",//required
+					"client_id",
+					"drop_api_key",//required
 					"droplet_id"//without returns list of droplets
 				]
 			},
 			{
 				"route":"/droplets/power_cycle",//search query
 				"params":[
-					"client_id",//required
+					"client_id",
+					"drop_api_key",//required
 					"droplet_id"//without returns list of droplets
 				]
 			},
 			{
 				"route":"/droplets/power_off",//search query
 				"params":[
-					"client_id",//required
+					"client_id",
+					"drop_api_key",//required
 					"droplet_id"//without returns list of droplets
 				]
 			},
 			{
 				"route":"/droplets/power_on",//search query
 				"params":[
-					"client_id",//required
+					"client_id",
+					"drop_api_key",//required
 					"droplet_id"//without returns list of droplets
 				]
 			},
 			{
 				"route":"/droplets/password_reset",//search query
 				"params":[
-					"client_id",//required
+					"client_id",
+					"drop_api_key",//required
 					"droplet_id"//without returns list of droplets
 				]
 			},
 			{
 				"route":"/droplets/resize",//search query
 				"params":[
-					"client_id",//required
+					"client_id",
+					"drop_api_key",//required
 					"droplet_id",//without returns list of droplets
 					"drop_size_id"
 				]
@@ -256,14 +265,16 @@
 			{
 				"route":"/droplets/snapshot",//search query
 				"params":[
-					"client_id",//required
+					"client_id",
+					"drop_api_key",//required
 					"droplet_id"//without returns list of droplets
 				]
 			},
 			{
 				"route":"/droplets/shutdown",//search query
 				"params":[
-					"client_id",//required
+					"client_id",
+					"drop_api_key",//required
 					"droplet_id",//without returns list of droplets
 					"drop_name"
 				]
@@ -271,7 +282,8 @@
 			{
 				"route":"/droplets/restore",//search query
 				"params":[
-					"client_id",//required
+					"client_id",
+					"drop_api_key",//required
 					"droplet_id",//without returns list of droplets
 					"drop_image_id"
 				]
@@ -279,7 +291,8 @@
 			{
 				"route":"/droplets/rebuild",//search query
 				"params":[
-					"client_id",//required
+					"client_id",
+					"drop_api_key",//required
 					"droplet_id",//without returns list of droplets
 					"drop_image_id"
 				]
@@ -287,7 +300,8 @@
 			{
 				"route":"/droplets/rename",//search query
 				"params":[
-					"client_id",//required
+					"client_id",
+					"drop_api_key",//required
 					"droplet_id",//without returns list of droplets
 					"drop_name"
 				]
@@ -295,12 +309,22 @@
 			{
 				"route":"/droplets/destroy",//search query
 				"params":[
-					"client_id",//required
+					"client_id",
+					"drop_api_key",//required
 					"droplet_id",//without returns list of droplets
 					"drop_scrub_data"
 				]
 			}
 		]
+	},
+	{
+		"API":"CNET",
+		"functions":[
+			{
+				"route":"/",
+				"params":[
+				]
+			}
 	},
 	{
 		"API":"Wisper",
@@ -345,4 +369,17 @@
 			}
 		]
 	},
+	{
+		"API":"Reddit",
+		"functions":[
+			{
+				"route":"distance",//search query
+				"params":[
+					"lat",
+					"long",
+					"limit"
+				]
+			}
+		]
+	}
 ]
