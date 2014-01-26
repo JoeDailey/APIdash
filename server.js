@@ -105,6 +105,7 @@ app.post('/rottentomatoes', function(req, res){
 });
 //Digital Ocean///////////////////////////////////////////////////////////////////////
 app.post('/digitalocean/:func', function(req, res){
+	var ocean = "&api_key=" + req.body.api_key;
 	if(req.params.func == "new"){
 		var opt1="", opt2="", opt3="";
 		if(req.body.drop_ssh_keys != undefined) opt1 = "&ssh_key_ids="+req.body.drop_ssh_keys;
@@ -116,13 +117,19 @@ app.post('/digitalocean/:func', function(req, res){
 		GET(digital+shark+req.body.client_id+ocean, res);
 	}
 	else if(req.params.func == "resize"){
-		GET(digital+req.body.droplet_id+"/"+req.params.func+shark+req.body.client_id+ocean+"size_id="+req.body.drop_size_id, res);
+		GET(digital+req.body.droplet_id+"/"+req.params.func+shark+req.body.client_id+ocean+"&size_id="+req.body.drop_size_id, res);
+	}
+	else if(req.params.func == "power_off"){
+		GET(digital+req.body.droplet_id+"/power_off"+shark+req.body.client_id+ocean, res);
+	}
+	else if(req.params.func == "power_on"){
+		GET(digital+req.body.droplet_id+"/power_on"+shark+req.body.client_id+ocean, res);
 	}
 	else if(req.params.func == "restore" || req.params.func == "rebuild"){
-		GET(digital+req.body.droplet_id+"/"+req.params.func+shark+req.body.client_id+ocean+"image_id="+req.body.drop_image_id, res);
+		GET(digital+req.body.droplet_id+"/"+req.params.func+shark+req.body.client_id+ocean+"&image_id="+req.body.drop_image_id, res);
 	}
 	else if(req.params.func == "rename"){
-		GET(digital+req.body.droplet_id+"/"+req.params.func+shark+req.body.client_id+ocean+"name="+req.body.drop_name, res);
+		GET(digital+req.body.droplet_id+"/"+req.params.func+shark+req.body.client_id+ocean+"&name="+req.body.drop_name, res);
 	}
 	else if(req.params.func == "rename"){
 		var opt1 = ""
@@ -288,7 +295,7 @@ var espnsite = "http://api.espn.com/v1/";
 var espnapikey = "q37qt8hvvk83u9ppwymr9d2g";
 var digital = "https://api.digitalocean.com/droplets/";
 var shark = "?client_id=";
-var ocean = "&api_key=dfcefb37223cd8206e6a194999a5dae1";
+var ocean = "";
 var whisper = "https://hackproxy.whisper.sh/";
 var sendgrid_key = "agressivepizza1";
 var sendgrid_user = "apidash";

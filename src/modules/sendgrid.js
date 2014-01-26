@@ -10,5 +10,7 @@ module.process(function() {
         'subject': module.input('subject'),
         'text': module.input('body'),
         'from': module.input('from')
+    }, function(){
+    	utils.notify("Email sent to " + module.input('to') + ".");
     });
 });
