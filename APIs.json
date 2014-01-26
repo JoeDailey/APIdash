@@ -146,29 +146,29 @@
 		"API":"Twitter",
 		"functions":[
 			{
-				"route":"tweet",
+				"route":"/tweet",
 				"params":[
 					"message"
 				]
 			},
 			{
-				"route":"feed",
+				"route":"/feed",
 				"params":[
 				]
 			},
 			{
-				"route":"user",
+				"route":"/user",
 				"params":[
 				]
 			},
 			{
-				"route":"search",
+				"route":"/search",
 				"params":[
 					"q"
 				]
 			},
 			{
-				"route":"sample",
+				"route":"/sample",
 				"params":[
 				]
 			}
@@ -313,6 +313,16 @@
 					"drop_api_key",//required
 					"droplet_id",//without returns list of droplets
 					"drop_scrub_data"
+				]
+			}
+		]
+	},
+	{
+		"API":"CNET",
+		"functions":[
+			{
+				"route":"/",
+				"params":[
 				]
 			}
 		]
