@@ -1,6 +1,22 @@
 var $ = require('jQuery');
 
 var util = require('util');
+var dbox  = require("dbox");
+var app   = dbox.app({ "app_key": "khf2wcgta1uewtj", "app_secret": "naxztmmgalat515" });
+// app.requesttoken(function(status, request_token){
+// 	console.log(request_token);
+// });
+// var t = { oauth_token_secret: 'zQRjFJZd1P7xE0a3',
+//   oauth_token: '0dCdTWsRcOgBhl3G',
+//  authorize_url: 'https://www.dropbox.com/1/oauth/authorize?oauth_token=0dCdTWsRcOgBhl3G' };
+// app.accesstoken(t, function(status, access_token){
+//   console.log(access_token)
+// })
+var dboxtoken = { oauth_token_secret: '43ibayca9p4yylh',
+  oauth_token: '7x0z6sy2b6jhh9c9',
+  uid: '260885326' };
+var dbclient = app.client(dboxtoken);
+
 var twitter = require('twitter');
 var twit = new twitter({
 	consumer_key: '76Ed5HIc8fzkDIPoIqUv4Q',
@@ -193,10 +209,26 @@ app.post('/twitter/:function', function(req, res) {
 				console.log(util.inspect(data));
 			}).updateStatus(req.body.message,function(data) {
 				console.log(util.inspect(data));
-				res.send(200,{'data':data});
+				res.send(300,{'data':data});
 			});
 		case 'feed':
-			break;
+			twit.get('/statuses/home_timeline.json',{include_entities:true}, function(data) {
+				res.send(300,data);
+			});
+		case 'user':
+			twit.get('/statuses/user_timeline.json',{include_entities:true}, function(data) {
+				res.send(300,data);
+			});
+		case 'search':
+			twit.get('/search/tweets.json?q='req.body.q,{include_entities:true}, function(data) {
+				res.send(300,data);
+			});
+		case 'sample':
+			twit.get('/statuses/sample.json',{include_entites:true}, function(data) {
+				res.send(300,data);
+			});
+		//	break;
+
 	}
 });
 app.post('/whisper/:func', function(req, res){
@@ -227,6 +259,17 @@ app.post('/whisper/:func', function(req, res){
 		break;
 	}
 });
+
+
+//DropBox///////////////////////////////////////////////////////////////////////
+app.post('/dropbox/:func', function(req, res){
+	if(req.params.func == "write"){
+		dbclient.put(req.body.filename, req.body.content, {root:"dropbox",overwrite:"false"}, function(status, reply){
+			res.send(200,'yah');
+		})
+	}
+});
+
 
 var GET = function(url, res){
 	console.log(url);

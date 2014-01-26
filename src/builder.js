@@ -2,6 +2,14 @@
 
     var G = createjs;
 
+    //colors
+    ccanvas = "#FFFFFF";
+    cboxinner = "#ABCDEF";
+    cboxouter = "#9999FF";
+    cportinner = "#8888FF";
+    cportouter = "#6666DD";
+    cportcircle = "#000088";
+
     var createStage = function(width, height) {
         var canvas = $('<canvas width="'+width+'" height="'+height+'"></canvas>').get(0);
         var ctx = canvas.getContext('2d');
@@ -49,7 +57,7 @@
         var c = this.container = new G.Container;
 
         var s = new G.Shape();
-        s.graphics.f('#abcdef').ss(1).s('#00');
+        s.graphics.f(cportinner).ss(1).s(cportouter);
         var rad = connHeight / 2;
         if (isInput)
             s.graphics.drawRoundRectComplex(0, 0, connWidth, connHeight, rad, 0, 0, rad);
@@ -59,7 +67,7 @@
         c.addChild(s);
 
         var pin = this.pin = new G.Shape;
-        pin.graphics.f('#777').drawCircle(0, 0, pinRadius).ef();
+        pin.graphics.f(cportcircle).drawCircle(0, 0, pinRadius).ef();
         if (isInput) {
             pin.x = pinMargin + pinRadius;
             pin.y = pinRadius + pinMargin;
@@ -79,8 +87,8 @@
 
     BuilderPort.prototype.pinPos = function() {
         var pt = this.pin.localToGlobal(0, 0);
-        pt.x /= 2;
-        pt.y /= 2;
+        pt.x /= this.container.getStage().ratio;
+        pt.y /= this.container.getStage().ratio;
         return pt;
     };
 
@@ -126,8 +134,8 @@
         // f = fill, ss = stroke size, s = begin stroke, r = rect
         // ef = end fill, es = end stroke.
         // http://www.createjs.com/Docs/EaselJS/classes/Graphics.html
-        body.graphics.f('#ABCDEF').ss(1).s('#000')
-            .drawRoundRectComplex(connProtrude, 0, bodyWidth, titleHeight + connSpace * size, 5, 5, 0, 0)
+        body.graphics.f(cboxinner).ss(1).s(cboxouter)
+            .drawRoundRectComplex(connProtrude, 0, bodyWidth, titleHeight + connSpace * size, 5, 5, 5, 5)
             .ef().es();
 
         var t = new G.Text(this.module.name, '10px verdana', '#000');
@@ -209,7 +217,7 @@
         stage.addChild(wireContainer);
 
         var bg = new G.Shape;
-        bg.graphics.f('#ccc').r(0, 0, 640, 480);
+        bg.graphics.f(ccanvas).r(0, 0, 640, 480);
         container.addChild(bg);
 
         var srcPort = null;
