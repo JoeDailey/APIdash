@@ -5,5 +5,5 @@ module.config({
 });
 
 module.process(function() {
-    module.send('out', 'hello');
+    module.send('out', 'madison, wi');
 });
