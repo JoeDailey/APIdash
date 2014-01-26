@@ -1,6 +1,13 @@
 var $ = require('jQuery');
 
-
+var util = require('util');
+var DropboxClient = require('dropbox-node').DropboxClient;
+var twitter = require('twitter');
+var twit = new twitter({
+	consumer_key: 'WCEw4OU46YhHtketERWiw',
+	consumer_secret: '2psAEUNdFZYS5CA20qswRLHNq43hFDXzguB5SUrnm4',
+	access_token_key: '2310743684-hl3yCgkRSXafEtkaQUbnSPWYHWyy9NZcANySY62',
+	access_token_secret: 'B5Z9bV1wHL6Hfhe12jMLBIu6FAIOBN7YyZVWPdwzL97YU'});
 var express = require('express');
 var app = express();
 
@@ -52,14 +59,14 @@ app.post('/espn/:function', function(req, res) {
 			console.log(req.body.method);
 			if (req.body.method == 'top') {
 				var url = espnsite+"now/top?limit=1&apikey="+espnapikey;
-				GET(url,res,function(data,status) {
+				GETcallback(url,res,function(data,status) {
 					console.log(data);
 					res.send(status,data);
 				});
 			}
 			else if (req.body.method == 'popular') {
 				var url = espnsite+"now/popular?limit=1&apikey="+espnapikey;
-				GET(url,res,function(data,status) {
+				GETcallback(url,res,function(data,status) {
 					console.log(data);
 					res.send(status,data);
 				});
@@ -186,6 +193,15 @@ app.post('/twilio/sendmessage', function(req, res){
 			});
 		}
 	});
+});
+
+
+//DropBox///////////////////////////////////////////////////////////////////////
+app.post('/dropbox/:func', function(req, res){
+	if(req.params.func == "write"){
+		var dropbox = new DropboxClient("lpig9evi8tva3hw","iy3gza3s6ur0ki1");
+		dropbox.getAccessToken("apidashteam@gmail.com", "agressivepizza", function(a,b){console.log(a); console.log(b)});
+	}
 });
 
 
