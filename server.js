@@ -160,7 +160,6 @@ app.post('/sendgrid/send', function(req, res){
 				api_user:req.body.api_user,
 				api_key:req.body.api_key,
 				to:req.body.to,
-				toname:req.body.toname,
 				subject:req.body.subject,
 				text:req.body.text,
 				from:req.body.from
