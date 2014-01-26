@@ -219,7 +219,7 @@ app.post('/twitter/:function', function(req, res) {
             });
             break;
         case 'search':
-            twit.get('/search/tweets.json?q=' + req.body.q+'&count='+req.body.count, {
+            twit.get('/search/tweets.json?q=' + req.body.q + '&count=' + req.body.count, {
                 include_entities: true
             }, function(data) {
                 res.send(300, data);
@@ -270,9 +270,7 @@ app.post('/dropbox/:func', function(req, res) {
             root: "dropbox",
             overwrite: "false"
         }, function(status, reply) {
-            res.send(200, {
-                'message': success
-            });
+            res.send(200, status);
         })
     }
 });
@@ -282,13 +280,13 @@ app.post('/cnet/', function(req, res) {
     GET(url, res);
 });
 //Reddit//////////////////////////////////////////////////////////////////////
-app.post('/reddit/comment', function(req, res){
-	reddit.login('BJ_Sargood', 'i ride the otter').end(function(err, user) {
-		reddit.comment(req.body.thing_id, req.body.text, function(err, success){
-			res.send(200, success);
-			console.log("wat");
-		});
-	});
+app.post('/reddit/comment', function(req, res) {
+    reddit.login('BJ_Sargood', 'i ride the otter').end(function(err, user) {
+        reddit.comment(req.body.thing_id, req.body.text, function(err, success) {
+            res.send(200, success);
+            console.log("wat");
+        });
+    });
 });
 
 
