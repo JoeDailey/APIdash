@@ -181,31 +181,23 @@ app.post('/sendgrid/send', function(req, res){
 });
 
 app.post('/twilio/sendmessage', function(req, res){
+	if(req.body.to.length<10)req.body.to = "1"+req.body.to;
+	if(req.body.to.indexOf('+')==-1)req.body.to = "+"+req.body.to;
 	$.ajax({
-		url: "https://ACe088ee6d17bce77541ba206263955b8b:9e730cd406c655aea6a7e644be15c0fe@api.twilio.com/2010-04-01/Accounts.json",
+		url: "https://api.twilio.com/2010-04-01/Accounts/ACe088ee6d17bce77541ba206263955b8b/Messages.json",
 		type: "POST",
 		dataType: "json",
-		data:{From:"+16087290126"},
+		data:{From:"+16087290126",
+			To:req.body.to,
+			Body:req.body.message
+		},
+		username: "ACe088ee6d17bce77541ba206263955b8b",
+		password: "9e730cd406c655aea6a7e644be15c0fe",
 		error:function(error){
 			res.send(400, {'message':error});
 		},
 		success:function(result, status){
-			if(req.body.to.indexOf('+')==-1)req.body.to = "+"+req.body.to;
-			$.ajax({
-				url: "https://api.twilio.com/2010-04-01/Accounts/ACe088ee6d17bce77541ba206263955b8b/Messages.json",
-				type: "POST",
-				dataType: "json",
-				data:{From:"+16087290126",
-					To:req.body.to,
-					Body:req.body.message
-				},
-				error:function(error){
-					res.send(400, {'message':error});
-				},
-				success:function(result, status){
-					res.send(status, result);
-				}
-			});
+			res.send(status, result);
 		}
 	});
 });
@@ -217,10 +209,26 @@ app.post('/twitter/:function', function(req, res) {
 				console.log(util.inspect(data));
 			}).updateStatus(req.body.message,function(data) {
 				console.log(util.inspect(data));
+				res.send(300,{'data':data});
 			});
-			res.send(200,'yah');
 		case 'feed':
-			break;
+			twit.get('/statuses/home_timeline.json',{include_entities:true}, function(data) {
+				res.send(300,data);
+			});
+		case 'user':
+			twit.get('/statuses/user_timeline.json',{include_entities:true}, function(data) {
+				res.send(300,data);
+			});
+		case 'search':
+			twit.get('/search/tweets.json?q='req.body.q,{include_entities:true}, function(data) {
+				res.send(300,data);
+			});
+		case 'sample':
+			twit.get('/statuses/sample.json',{include_entites:true}, function(data) {
+				res.send(300,data);
+			});
+		//	break;
+
 	}
 });
 

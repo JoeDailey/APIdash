@@ -222,5 +222,47 @@
 				]
 			}
 		]
-	}
+	},
+	{
+		"API":"Wisper",
+		"functions":[
+			{
+				"route":"distance",//search query
+				"params":[
+					"lat",
+					"long",
+					"limit"
+				]
+			},
+			{
+				"route":"popular",//search query
+				"params":[
+					"before_wid",
+					"num_results",
+					"inlude_topics"
+				]
+			},
+			{
+				"route":"all_time",//search query
+				"params":[
+				]
+			},
+			{
+				"route":"search",//search query
+				"params":[
+					"limit",
+					"feed_type"
+				]
+			},
+			{
+				"route":"feed",//search query
+				"params":[
+					"feed_id",
+					"before_wid",
+					"limit",
+					"feed_type"
+				]
+			}
+		]
+	},
 ]
