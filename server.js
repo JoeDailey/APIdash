@@ -88,7 +88,7 @@ app.post('/espn/:function', function(req, res) {
         case 'headlines':
             var url = espnsite + "sports/news/headlines?limit=1&apikey=" + espnapikey;
             $.get(url, function(data) {
-                res.json(data.headlines[0].headline);
+                res.json(data.headlines);
             });
     }
 });

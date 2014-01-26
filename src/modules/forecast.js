@@ -1,5 +1,5 @@
 module.config({
-    'name': 'Wunderground',
+    'name': 'Today\'s Forecast',
     'inputs': 'location',
     'outputs': 'forecast'
 });
