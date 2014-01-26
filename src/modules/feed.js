@@ -4,7 +4,7 @@ module.config({
 });
 
 module.process(function() {
-	util.api('twitter/feed', {}, function(data) {
+	utils.api('twitter/feed', {}, function(data) {
 		module.output('feed',data);
 	});
 });

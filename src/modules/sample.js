@@ -1,10 +1,11 @@
 module.config({
 	'name':'Twitter Sample',
-	'outputs':'results'
+	'outputs':'tweets',
+    'category': 'Data Providers'
 });
 
 module.process(function() {
-	util.api('twitter/sample', {} , function(data) {
+	utils.api('twitter/sample', {} , function(data) {
 		module.output('results',data);
 	});
 });

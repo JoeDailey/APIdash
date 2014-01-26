@@ -2,23 +2,20 @@
 .cf:after { clear: both; }
 .cf { *zoom: 1; }
 
+html, body { height: 100%; }
+
 body {
   font-family: Tahoma, Verdana, Helvetica, sans-serif;
-  padding: 5px;
+  padding: 0;
   margin: 0;
-  -webkit-touch-callout: none;
-  -webkit-user-select: none;
-  -khtml-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
+  -webkit-touch-callout: none; -webkit-user-select: none; -khtml-user-select: none;  -moz-user-select: none; -ms-user-select: none; user-select: none;
 }
 
-* { box-sizing: border-box; }
+* { box-sizing: border-box; outline: none; }
 .ui-dialog, #codemodal { overflow: hidden; }
 canvas { border: 1px solid #aaa; }
 #codemodal { padding: 0; padding-left: 5px; padding-top: 7px; }
-#codemodal textarea { width: 100%; height: 100%; margin: 0; padding: 3px; outline: none;  border: 1px solid #aaa; }
+#codemodal textarea { width: 100%; height: 100%; margin: 0; padding: 3px;  border: 1px solid #aaa; }
 #codemodal textarea.error { border: 1px solid #ff0000; }
 .ui-dialog-titlebar { padding: 1px 5px !important; }
 .ui-dialog textarea {
@@ -40,54 +37,38 @@ canvas { border: 1px solid #aaa; }
   background: none;
   border: none;
   padding: 2px 2px;
-  outline: none;
 }
 
-#modules, #container {
-  float: left;
-}
-
-#modules {
-  width: 150px;
-  margin-right: 5px;
-}
-#modules h2 {
-  text-align: center;
-  font-size: 16px;
-  margin: 0;
-  padding: 0;
-
-}
-#modules button {
-  cursor: pointer;
-  display: block;
-  width: 100%;
-}
-#left-panel{
+#left-panel {
   float:left;
   height: 100%;
 }
-#left-main-panel{
+
+#left-main-panel {
   height:100%;
-  width:200px;
+  width:130px;
   background: rgba(0,0,0,0.3);
   float: left;
 }
 #left-med-panel{
-  width: 10px;
-  box-shadow: 0 0 5px inset;
+  width: 5px;
+  box-shadow: 0 0 3px #aaa inset;
   float: left;
   height: 100%;
 }
-#left-bar{
+#left-bar {
   height: 40px;
   width: 100%;
   background: #8BA1E5;
-  line-height: 40px; 
+  line-height: 40px;
   color: white;
   text-shadow: 0 1px black;
 }
-#left-hider, #left-shower{
+#left-bar h1 {
+  margin: 0;
+  font-size: 18px;
+}
+#left-hider, #left-shower-bar div {
   width: 30px;
   height: 30px;
   background:white;
@@ -113,24 +94,12 @@ canvas { border: 1px solid #aaa; }
   left:5px;
   top:5px;
 }
-#left-main-panel button{
+#left-main-panel button {
   width:100%;
   background-color:#b8e356;
-  -webkit-border-top-left-radius:0px;
-  -moz-border-radius-topleft:0px;
-  border-top-left-radius:0px;
-  -webkit-border-top-right-radius:0px;
-  -moz-border-radius-topright:0px;
-  border-top-right-radius:0px;
-  -webkit-border-bottom-right-radius:0px;
-  -moz-border-radius-bottomright:0px;
-  border-bottom-right-radius:0px;
-  -webkit-border-bottom-left-radius:0px;
-  -moz-border-radius-bottomleft:0px;
-  border-bottom-left-radius:0px;
   text-indent:0;
   border:1px solid #83c41a;
-  display:inline-block;
+  border-bottom: 0;
   color:#ffffff;
   font-family:Arial;
   font-size:15px;
@@ -142,6 +111,10 @@ canvas { border: 1px solid #aaa; }
   text-align:center;
   text-shadow:1px 1px 0px #86ae47;
 }
+#left-main-panel button:last {
+  border-bottom: 1px solid #83c41a;
+}
+
 #left-sub-panel{
   height: 100%;
   background:rgba(0,0,0,0.2);
@@ -154,25 +127,18 @@ canvas { border: 1px solid #aaa; }
   position:relative;
   top:1px;
 }
+
+#left-sub-panel div {
+  display: none;
+}
 #left-sub-panel button{
   width:100px;
   height: 40px;
   background-color:#C6E978;
-  -webkit-border-top-left-radius:0px;
-  -moz-border-radius-topleft:0px;
-  border-top-left-radius:0px;
-  -webkit-border-top-right-radius:0px;
-  -moz-border-radius-topright:0px;
-  border-top-right-radius:0px;
-  -webkit-border-bottom-right-radius:0px;
-  -moz-border-radius-bottomright:0px;
-  border-bottom-right-radius:0px;
-  -webkit-border-bottom-left-radius:0px;
-  -moz-border-radius-bottomleft:0px;
-  border-bottom-left-radius:0px;
   text-indent:0;
   border:1px solid #83c41a;
-  display:inline-block;
+  border-bottom: 0;
+  display: block;
   color:#ffffff;
   font-family:Arial;
   font-size:15px;
@@ -184,6 +150,12 @@ canvas { border: 1px solid #aaa; }
   text-align:center;
   text-shadow:1px 1px 0px #86ae47;
 }
+
+#left-sub-panel button:last {
+  border-bottom: 1px solid #83c41a;
+}
+
+
 #left-sub-panel button:hover {
   background-color:#B2D26C;
 }
@@ -191,21 +163,7 @@ canvas { border: 1px solid #aaa; }
   position:relative;
   top:1px;
 }
-.left-buttons{
-  display: block;
-}
-.left-sub-buttons{
-  display: none;
-}
-#right-content{
+#right-content {
   float: left;
   padding:15px;
-}
-html, body{
-  height: 100%;
-  padding: 0;
-  margin:0;
-}
-body{
-  display: inline-block;
 }

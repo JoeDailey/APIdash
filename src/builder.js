@@ -408,13 +408,39 @@
         });
 
         loadBuiltinModules('/static/builtin_modules.txt', function(factories) {
-            _.each(factories, function (fact) {
-                var btn = $("<button>" + fact.name + "</button>");
-                $("#modules").append(btn);
-                btn.click(function() {
-                    addModule(fact.create());
+
+            var cats = {};
+            _.each(factories, function (mod) {
+                cats[mod.category] = cats[mod.category] || [];
+                cats[mod.category].push(mod);
+            });
+
+            var openedCat = null,
+                sortedCats = _.keys(cats);
+            sortedCats.sort();
+
+            _.each(sortedCats, function (catName) {
+                var mods = cats[catName];
+                var cat = $('<button>' + catName + '</button>').appendTo($('#left-main-panel'));
+
+                var submenu = $('<div></div>').appendTo($('#left-sub-panel'));
+                _.each(mods, function(mod) {
+                    btn = $('<button>' + mod.name + '</button>').appendTo(submenu);
+                    btn.click(function() {
+                        addModule(mod.create());
+                    });
+                });
+
+                cat.click(function() {
+                    $('#left-sub-panel div').hide();
+                    if (openedCat != cat) {
+                        submenu.show();
+                        openedCat = cat;
+                    } else
+                        openedCat = null;
                 });
             });
+
         });
 
         G.Ticker.setFPS(30);

@@ -1,7 +1,8 @@
 module.config({
     'name': 'Splitter',
     'inputs': 'data',
-    'outputs': ['data1', 'data2', 'data3']
+    'outputs': ['data1', 'data2', 'data3'],
+    'category': 'Processors'
 });
 
 module.process(function() {

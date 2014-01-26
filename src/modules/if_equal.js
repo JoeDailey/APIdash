@@ -1,15 +1,14 @@
 module.config({
-    'name': 'If A Equal To B',
+    'name': 'If A==B send A',
     'inputs': ['A', 'B'],
     'outputs': 'A',
-    'category': 'adsadasd'
+    'category': 'Logic'
 });
 
 module.process(function() {
     var out = null;
-    var a = Number(module.input("A"));
-    var b = Number(module.input("B"));
-    if (a == b || module.input("A") === module.input("B")) {
-        module.send("A", module.input("A"));
-    }
+    var a = module.input("A");
+    var b = module.input("B");
+    if (utils.equal(a, b))
+        module.send('A', a);
 });
