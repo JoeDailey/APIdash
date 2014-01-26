@@ -7,15 +7,6 @@ var app = dbox.app({
     "app_key": "khf2wcgta1uewtj",
     "app_secret": "naxztmmgalat515"
 });
-// app.requesttoken(function(status, request_token){
-// 	console.log(request_token);
-// });
-// var t = { oauth_token_secret: 'zQRjFJZd1P7xE0a3',
-//   oauth_token: '0dCdTWsRcOgBhl3G',
-//  authorize_url: 'https://www.dropbox.com/1/oauth/authorize?oauth_token=0dCdTWsRcOgBhl3G' };
-// app.accesstoken(t, function(status, access_token){
-//   console.log(access_token)
-// })
 var dboxtoken = {
     oauth_token_secret: '43ibayca9p4yylh',
     oauth_token: '7x0z6sy2b6jhh9c9',
@@ -279,16 +270,14 @@ app.post('/cnet/', function(req, res) {
     var url = 'http://developer.api.cnet.com/rest/v1.0/techProduct?productId=' + req.body.id + '&iod=none&viewType=json&partTag=43zw4zhq8adnxex35amrdbw4';
     GET(url, res);
 });
-//Reddit//////////////////////////////////////////////////////////////////////
-app.post('/reddit/comment', function(req, res) {
-    reddit.login('BJ_Sargood', 'i ride the otter').end(function(err, user) {
-        reddit.comment(req.body.thing_id, req.body.text, function(err, success) {
-            res.send(200, success);
-            console.log("wat");
-        });
-    });
-});
 
+app.post('/reddit/:func', function(req, res){
+    if(req.body.page_string==undefined){
+        GET("http://www.reddit.com/r/"+req.params.func+"/.json", res);
+    }else{
+        GET("http://www.reddit.com/r/"+req.params.func+"/"+req.body.page_string+"/.json", res);
+    }
+});
 
 var GET = function(url, res) {
     console.log(url);
