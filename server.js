@@ -30,7 +30,7 @@ app.use(express.bodyParser());
 app.set('view options', {
     layout: false
 });
-app.listen(9001);
+app.listen(80);
 app.set('views', __dirname + '/views');
 app.engine('.html', require('ejs').__express);
 
