@@ -193,14 +193,27 @@ app.post('/twitter/:function', function(req, res) {
 				console.log(util.inspect(data));
 			}).updateStatus(req.body.message,function(data) {
 				console.log(util.inspect(data));
-				res.send(200,{'data':data});
+				res.send(300,{'data':data});
 			});
 		case 'feed':
-			break;
-	}
-});
-app.post('/twilio/sendmessage', function(req, res){
+			twit.get('/statuses/home_timeline.json',{include_entities:true}, function(data) {
+				res.send(300,data);
+			});
+		case 'user':
+			twit.get('/statuses/user_timeline.json',{include_entities:true}, function(data) {
+				res.send(300,data);
+			});
+		case 'search':
+			twit.get('/search/tweets.json?q='req.body.q,{include_entities:true}, function(data) {
+				res.send(300,data);
+			});
+		case 'sample':
+			twit.get('/statuses/sample.json',{include_entites:true}, function(data) {
+				res.send(300,data);
+			});
+		//	break;
 
+	}
 });
 
 var GET = function(url, res){
