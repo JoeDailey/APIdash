@@ -50,7 +50,8 @@ Module.prototype.input = function(key) {
 };
 
 Module.prototype.send = function(output, data) {
-    this.outputs[output].setVal(data);
+    var out = this.outputs[output];
+    out && out.setVal(data);
 };
 
 Module.prototype.hasValidInputs = function() {
