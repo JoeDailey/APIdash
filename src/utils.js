@@ -8,3 +8,8 @@ ModuleUtils.prototype.api = function(path, data, cb) {
     xhr.done(cb);
     this.module.addXHR(xhr);
 };
+
+ModuleUtils.prototype.notify = function(string){
+	$("#console").append(string + "<br />");
+	$('#console').scrollTop($('#console')[0].scrollHeight);
+}
