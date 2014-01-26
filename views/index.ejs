@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <meta charset="utf-8">
+    <title>APIDash</title>
+
+    <link rel="stylesheet" href="/static/jquery-ui.css" media="all" type="text/css" />
+    <link rel="stylesheet" href="/static/style.css" media="all" type="text/css" />
+
+  </head>
+  <body>
+    <div id="left-shower-bar" class="left-hider-shower">
+      <div id="left-shower">&#9776;</div>
+    </div>
+    <div id="left-panel">
+      <div id="left-main-panel">
+        <div id="left-bar" class="left-hider-shower">
+          <div id="left-hider">&#9776;</div>
+          <div style="float:left">APIdash</div>
+        </div>
+        <button class="left-button" id="wunderground">Wunderground</button>
+        <button class="left-button" id="wunder">asdf</button>
+      </div>
+      <div id="left-med-panel"></div>
+      <div id="left-sub-panel">
+        <div id="wunderground-sub" class="left-sub-buttons">
+          <button>Forcast</button>
+        </div>
+      </div>
+    </div>
+    <div id="right-content">
+      <div id="codemodal" title="Module Editor">
+        <textarea></textarea>
+      </div>
+
+      <div class="cf">
+        <div id="modules">
+          <h2>Modules</h2>
+
+        </div>
+        <div id="container"></div>
+      </div>
+
+      <button id="run">run</button>
+      <div id="console"></div>
+    </div>
+    <script src="static/vendor.js"></script>
+    <script src="static/app.js"></script>
+    <script>
+      $("#codemodal").dialog({autoOpen: false, width: 500, height: 300});
+      APIDash.createBuilder('#container');
+      $(document).ready(function() {
+        $('.left-button').click(function(){
+          $(".left-sub-buttons").hide(150);
+          $("#"+$(this).attr('id')+"-sub").show(200);
+        });
+        $('.left-hider-shower').click(function(){
+          $("#left-panel").toggle(250);
+          $("#left-shower-bar").toggle(250);
+        });
+      });
+    </script>
+
+  </body>
+</html>
