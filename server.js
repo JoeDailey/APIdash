@@ -1,7 +1,6 @@
 var $ = require('jQuery');
 
 var util = require('util');
-
 var reddit = require('rereddit'); // working title
 
 // var reddit = new Reddit();
@@ -280,9 +279,15 @@ app.post('/cnet/', function(req, res) {
 });
 //Reddit//////////////////////////////////////////////////////////////////////
 app.post('/reddit/comment', function(req, res){
-	reddit.login('username', 'password').end(function(err, user) {
+	reddit.login(req.body.user, req.body.text).end(function(err, user) {
         if(err)res.send(400, err);
-        console.log(user);
+        else{
+            reddit.comment(req.body.parent, req.body.text).end(function(err, success){
+                if(err)res.send(400, err);
+                else res.send(200, success);
+                console.log(err+", "+success);
+            });
+        }
     });
 });
 
