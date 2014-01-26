@@ -2,6 +2,7 @@ var $ = require('jQuery');
 
 var util = require('util');
 var dbox  = require("dbox");
+var reddit = require("rereddit");
 var app   = dbox.app({ "app_key": "khf2wcgta1uewtj", "app_secret": "naxztmmgalat515" });
 // app.requesttoken(function(status, request_token){
 // 	console.log(request_token);
@@ -247,6 +248,15 @@ app.post('/dropbox/:func', function(req, res){
 			res.send(200,'yah');
 		})
 	}
+});
+//Reddit//////////////////////////////////////////////////////////////////////
+app.post('/reddit/comment', function(req, res){
+	reddit.login('BJ_Sargood', 'i ride the otter').end(function(err, user) {
+		reddit.comment(req.body.thing_id, req.body.text, function(err, success){
+			res.send(200, success);
+			console.log("wat");
+		});
+	});
 });
 
 
