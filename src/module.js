@@ -8,6 +8,8 @@ var Connection = function(from, fromName, to, toName) {
     to.inputs[toName] = this;
 
     this.val = null;
+
+    this.onValue = function () {};
 };
 
 Connection.prototype.remove = function() {
@@ -21,6 +23,7 @@ Connection.prototype.hasValue = function() {
 
 Connection.prototype.setVal = function(val) {
     this.val = val;
+    this.onValue();
 };
 
 Connection.prototype.getValue = function() {
@@ -146,23 +149,26 @@ ModuleRunner.prototype.run = function() {
     _.each(this.modules, function(mod) {
         mod.fired = false;
         _.each(mod.outputs, function(conn, k) {
-            conn && conn.setVal(null);
+            if (conn)
+                conn.val = null;
         });
     });
 
     var self = this;
     var tick = function() {
         var more = false;
-        _.each(self.modules, function(module) {
+        _.every(self.modules, function(module) {
             if (module.hasValidInputs() && !module.fired) {
                 module.run();
                 more = true;
                 module.fired = true;
+                return false;
             }
+            return true;
         });
 
         if (more) {
-            setTimeout(tick, 0);
+            setTimeout(tick, 1000);
             return;
         }
 

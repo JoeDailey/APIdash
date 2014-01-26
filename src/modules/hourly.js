@@ -10,6 +10,6 @@ module.process(function() {
 
   xhr.done(function(data) {
       if (data.forecast)
-      module.send('hourly', data);
+          module.send('hourly', data);
   });
 });

@@ -1,7 +1,8 @@
 module.config({
     'name': 'Weather Alerts',
     'inputs': 'location',
-    'outputs': 'alerts'
+    'outputs': 'alerts',
+    'category': 'Data Providers'
 });
 
 module.process(function() {
@@ -10,6 +11,11 @@ module.process(function() {
     });
 
     xhr.done(function(data) {
-        module.send('alerts', data.alerts[0].message);
+        if (!data.alerts)
+            return;
+        module.send('alerts', _.map(data.alerts, function(alert) {
+            var msg = alert.message.split('...\n');
+            return alert.date + ': ' + msg[0];
+        }));
     });
 });

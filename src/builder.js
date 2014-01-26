@@ -267,6 +267,12 @@
         this.g = this.container.graphics;
         this.update();
         this.conn = new Connection(from.module, from.name, to.module, to.name);
+        var self = this;
+        this.conn.onValue = function() {
+            console.log('hi');
+            self.container.alpha = 0.7;
+            G.Tween.get(self.container).to({alpha: 1}, 750);
+        };
     };
 
     Wire.prototype.update = function() {
@@ -286,9 +292,9 @@
     // BUILDER
     //------------------------------------------------------
     exports.createBuilder = function(elem) {
-        var stage = createStage(640, 480);
-        stage.width = 640;
-        stage.height = 480;
+        var stage = createStage(1024, 650);
+        stage.width = 1024;
+        stage.height = 650;
         stage.enableMouseOver();
 
         $(elem).append(stage.canvas);
@@ -301,7 +307,7 @@
         stage.addChild(wireContainer);
 
         var bg = new G.Shape;
-        bg.graphics.f('#f9f9f9').r(0, 0, 640, 480);
+        bg.graphics.f('#f9f9f9').r(0, 0, stage.width, stage.height);
         container.addChild(bg);
 
         var srcPort = null;

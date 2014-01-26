@@ -90,7 +90,7 @@ canvas { border: 1px solid #aaa; }
 }
 #left-shower-bar{
   display: none;
-  position: fixed;
+  /*position: fixed;*/
   left:5px;
   top:5px;
 }
