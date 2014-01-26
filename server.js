@@ -1,6 +1,28 @@
 var $ = require('jQuery');
 
+var util = require('util');
+var dbox  = require("dbox");
+var app   = dbox.app({ "app_key": "khf2wcgta1uewtj", "app_secret": "naxztmmgalat515" });
+// app.requesttoken(function(status, request_token){
+// 	console.log(request_token);
+// });
+// var t = { oauth_token_secret: 'zQRjFJZd1P7xE0a3',
+//   oauth_token: '0dCdTWsRcOgBhl3G',
+//  authorize_url: 'https://www.dropbox.com/1/oauth/authorize?oauth_token=0dCdTWsRcOgBhl3G' };
+// app.accesstoken(t, function(status, access_token){
+//   console.log(access_token)
+// })
+var dboxtoken = { oauth_token_secret: '43ibayca9p4yylh',
+  oauth_token: '7x0z6sy2b6jhh9c9',
+  uid: '260885326' };
+var dbclient = app.client(dboxtoken);
 
+var twitter = require('twitter');
+var twit = new twitter({
+	consumer_key: '76Ed5HIc8fzkDIPoIqUv4Q',
+	consumer_secret: 'NfbenaoE6B08wfDJjzND8WF55KujCBGaEiulhMAn4s',
+	access_token_key: '2310743684-dNbEqQxJbJ0KDDXbmhCwI1qc9ImWTxC8BNVmoTG',
+	access_token_secret: '7RnqSp0LNn83AKtW1A0rpnGxjT3lYXzJwZshrvXLTZBa5'});
 var express = require('express');
 var app = express();
 
@@ -52,14 +74,14 @@ app.post('/espn/:function', function(req, res) {
 			console.log(req.body.method);
 			if (req.body.method == 'top') {
 				var url = espnsite+"now/top?limit=1&apikey="+espnapikey;
-				GET(url,res,function(data,status) {
+				GETcallback(url,res,function(data,status) {
 					console.log(data);
 					res.send(status,data);
 				});
 			}
 			else if (req.body.method == 'popular') {
 				var url = espnsite+"now/popular?limit=1&apikey="+espnapikey;
-				GET(url,res,function(data,status) {
+				GETcallback(url,res,function(data,status) {
 					console.log(data);
 					res.send(status,data);
 				});
@@ -157,6 +179,69 @@ app.post('/sendgrid/send', function(req, res){
 		}
 	});
 });
+
+app.post('/twilio/sendmessage', function(req, res){
+	if(req.body.to.length<10)req.body.to = "1"+req.body.to;
+	if(req.body.to.indexOf('+')==-1)req.body.to = "+"+req.body.to;
+	$.ajax({
+		url: "https://api.twilio.com/2010-04-01/Accounts/ACe088ee6d17bce77541ba206263955b8b/Messages.json",
+		type: "POST",
+		dataType: "json",
+		data:{From:"+16087290126",
+			To:req.body.to,
+			Body:req.body.message
+		},
+		username: "ACe088ee6d17bce77541ba206263955b8b",
+		password: "9e730cd406c655aea6a7e644be15c0fe",
+		error:function(error){
+			res.send(400, {'message':error});
+		},
+		success:function(result, status){
+			res.send(status, result);
+		}
+	});
+});
+
+app.post('/twitter/:function', function(req, res) {	
+	switch (req.params.function) {
+		case 'tweet':
+			twit.verifyCredentials(function(data) {
+				console.log(util.inspect(data));
+			}).updateStatus(req.body.message,function(data) {
+				console.log(util.inspect(data));
+				res.send(300,{'data':data});
+			});
+		case 'feed':
+			twit.get('/statuses/home_timeline.json',{include_entities:true}, function(data) {
+				res.send(300,data);
+			});
+		case 'user':
+			twit.get('/statuses/user_timeline.json',{include_entities:true}, function(data) {
+				res.send(300,data);
+			});
+		case 'search':
+			twit.get('/search/tweets.json?q='req.body.q,{include_entities:true}, function(data) {
+				res.send(300,data);
+			});
+		case 'sample':
+			twit.get('/statuses/sample.json',{include_entites:true}, function(data) {
+				res.send(300,data);
+			});
+		//	break;
+
+	}
+});
+
+
+//DropBox///////////////////////////////////////////////////////////////////////
+app.post('/dropbox/:func', function(req, res){
+	if(req.params.func == "write"){
+		dbclient.put(req.body.filename, req.body.content, {root:"dropbox",overwrite:"false"}, function(status, reply){
+			res.send(200,'yah');
+		})
+	}
+});
+
 
 var GET = function(url, res){
 	console.log(url);
