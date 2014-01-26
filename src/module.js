@@ -38,24 +38,18 @@ var Module = function() {
     this.inputList = [];
     this.outputList = [];
 
-    this.func = null;
+    this.func = function() {};
     this.source = "";
 
     this.onChange = function() {};
-
     this.fired = false;
-
-    var self = this;
 };
-
 
 Module.prototype.input = function(key) {
     return this.inputs[key].val;
 };
 
 Module.prototype.send = function(output, data) {
-    console.log(output);
-    console.log(data);
     this.outputs[output].setVal(data);
 };
 
@@ -88,6 +82,8 @@ Module.prototype.config = function(obj) {
 
     if (!_.isArray(obj.inputs)) obj.inputs = [obj.inputs];
     if (!_.isArray(obj.outputs)) obj.outputs = [obj.outputs];
+
+    this.fixed = obj.fixed;
 
     if (JSON.stringify(obj.inputs)==JSON.stringify(self.inputList) &&
         JSON.stringify(obj.outputs)==JSON.stringify(self.outputList))

@@ -41,6 +41,9 @@
         pinRadius = (connHeight - pinMargin * 2) / 2,
         connProtrude = pinRadius * 2 + 10;
 
+    var fixedWidth = 180,
+        fixedHeight = 23;
+
     var BuilderPort = function(module, name, isInput) {
         this.module = module;
         this.isInput = isInput;
@@ -57,7 +60,10 @@
         else
             s.graphics.drawRoundRectComplex(0, 0, connWidth, connHeight, 0, rad, rad, 0);
          */
-        s.graphics.drawRoundRect(0, 0, connWidth, connHeight, rad);
+        if (name)
+            s.graphics.drawRoundRect(0, 0, connWidth, connHeight, rad);
+        else
+            s.graphics.drawRoundRect(0, 0, fixedWidth, fixedHeight, rad);
         c.addChild(s);
 
         var pin = this.pin = new G.Shape;
@@ -70,18 +76,24 @@
             pin.y = pinRadius + pinMargin;
         }
 
+        if (!name) {
+            pin.x = fixedWidth - pinRadius - pinMargin;
+            pin.y += 2;
+        }
+
         pin.shadow = new G.Shadow('#666', 1, 1, 1);
         s.shadow = new G.Shadow('#666', 1, 1, 1);
 
         c.addChild(pin);
 
-        var text = new G.Text(name, '10px verdana', '#000');
-        text.y = connHeight / 2 - 1;
-        text.regY = text.getBounds().height / 2;
-        text.x = isInput ? connWidth - text.getBounds().width - 5 : 5;
-        c.addChild(text);
-
-        text.mouseEnabled = false;
+        if (name) {
+            var text = new G.Text(name, '10px verdana', '#000');
+            text.y = connHeight / 2 - 1;
+            text.regY = text.getBounds().height / 2;
+            text.x = isInput ? connWidth - text.getBounds().width - 5 : 5;
+            c.addChild(text);
+            text.mouseEnabled = false;
+        }
         pin.mouseEnabled = false;
     };
 
@@ -105,18 +117,10 @@
         stage.addChild(c);
         this.ports = [];
 
-        var self = this;
-        this.module.onChange = function(portsChanged) {
-            if (portsChanged)
-                self.update();
-            else
-                self.text.text = self.module.name;
-        };
-
+        // delete button
         var del = this.delbtn = new G.Shape;
         del.graphics.ss(3).s('#333').moveTo(0, 0).lineTo(8, 8)
             .moveTo(8, 0).lineTo(0, 8).es();
-
         var hit = new G.Shape;
         hit.graphics.beginFill('#000').drawRect(-1, -1, 9, 9);
         del.hitArea = hit;
@@ -124,10 +128,54 @@
         del.on('mouseover', function() { del.alpha = 1; });
         del.on('mouseout', function() { del.alpha = 0.7; });
 
-        del.x = connProtrude + bodyWidth - 13;
-        del.y = 5;
+        var self = this;
+        var setupNonFixed = function() {
+            self.module.onChange = function(portsChanged) {
+                if (portsChanged)
+                    self.update();
+                else
+                    self.text.text = self.module.name;
+            };
+            del.x = connProtrude + bodyWidth - 13;
+            del.y = 5;
+            self.update();
+        };
 
-        this.update();
+        var setupFixed = function() {
+            self.port = new BuilderPort(mod, '', false);
+            self.port.name = 'out';
+            self.ports = [self.port];
+            c.addChild(self.port.container);
+
+            mod.fixedValue = 'value';
+
+            var elem = $('<div class="inp"><input type="text" value="value" style="width: 135px;" /></div>');
+            elem.prependTo($('body'));
+            elem.keyup(function() {
+                mod.fixedValue = elem.children('input').val();
+            });
+
+            var dom = new G.DOMElement(elem.get(0));
+            dom.scaleX = dom.scaleY = 0.5;
+
+            dom.addEventListener('tick', function() {
+                dom.x = c.x / 2 + 12;
+                dom.y = (c.y + 0.5) / 2;
+            });
+            dom.mouseEnabled = false;
+            c.getStage().addChild(dom);
+
+            var block = new G.Shape();
+            block.alpha = 0.01;
+            block.graphics.f('#fff').drawRect(0, 0, 24, fixedHeight);
+            c.addChild(block);
+        };
+
+        if (mod.fixed)
+            setupFixed();
+        else
+            setupNonFixed();
+
     };
 
     BuilderModule.prototype.removeConnections = function() {
@@ -184,6 +232,10 @@
             b.container.y = titleHeight + connSpace * i;
             c.addChild(b.container);
         });
+    };
+
+    var FixedValue = function() {
+
     };
 
     var drawWire = function(g, fromx, fromy, tox, toy) {
@@ -324,7 +376,7 @@
                 });
             });
 
-            b.container.on('dblclick', function (evt) {
+            !b.fixed && b.container.on('dblclick', function (evt) {
                 $("#codemodal").dialog('open');
                 $("#codemodal textarea").val(b.module.source);
                 oldCode = b.module.source;
@@ -368,7 +420,6 @@
         G.Ticker.addEventListener('tick', function() {
             stage.update();
         });
-
 
         $('#run').click(function() {
             var r = new ModuleRunner(_.map(modules, function(m) { return m.module }));
