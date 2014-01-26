@@ -411,7 +411,6 @@
 
             var cats = {};
             _.each(factories, function (mod) {
-                console.log(mod.category);
                 cats[mod.category] = cats[mod.category] || [];
                 cats[mod.category].push(mod);
             });
@@ -422,7 +421,6 @@
 
             _.each(sortedCats, function (catName) {
                 var mods = cats[catName];
-                console.log(catName);
                 var cat = $('<button>' + catName + '</button>').appendTo($('#left-main-panel'));
 
                 var submenu = $('<div></div>').appendTo($('#left-sub-panel'));

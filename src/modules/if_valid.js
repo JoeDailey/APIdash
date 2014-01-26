@@ -2,7 +2,7 @@ module.config({
     'name': 'If Trigger Send A',
     'inputs': ['Trigger', 'A'],
     'outputs': 'A',
-    'category': 'adsadasd'
+    'category': 'Logic'
 });
 
 module.process(function() {

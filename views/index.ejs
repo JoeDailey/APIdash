@@ -46,17 +46,6 @@
     <script>
       $("#codemodal").dialog({autoOpen: false, width: 500, height: 300});
       APIDash.createBuilder('#container');
-
-      $(document).ready(function() {
-        $('.left-button').click(function(){
-          $(".left-sub-buttons").hide(150);
-          $("#"+$(this).attr('id')+"-sub").show(200);
-        });
-        $('.left-hider-shower').click(function(){
-          $("#left-panel").toggle(250);
-          $("#left-shower-bar").toggle(250);
-        });
-      });
     </script>
 
   </body>

@@ -1,6 +1,7 @@
 module.config({
     'name': 'Text To Speech',
-    'inputs': 'data'
+    'inputs': 'data',
+    'category': 'Actions'
 });
 
 module.process(function() {
