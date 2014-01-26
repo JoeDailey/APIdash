@@ -1,9 +1,8 @@
-
 module.config({
-    'name': 'Hello',
+    'name': 'Hello World',
     'outputs': 'out'
 });
 
 module.process(function() {
-    module.send('out', 'madison, wi');
+    module.send('out', 'Hello, World!');
 });
