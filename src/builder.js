@@ -47,8 +47,8 @@
         this.name = name;
 
         var c = this.container = new G.Container;
-
-        var s = new G.Shape();
+        //long thing
+        var s = this.s = new G.Shape();
         s.graphics.f('#98b7ef');
         var rad = connHeight / 2;
         /*
@@ -270,9 +270,9 @@
 
         var setupPorts = function(bm) {
             _.each(bm.ports, function (port) {
-                if (port.pin.hasEventListener("click"))
+                if (port.s.hasEventListener("click"))
                     return;
-                port.pin.on("click", function (evt) {
+                port.s.on("click", function (evt) {
 
                     evt.stopPropagation();
                     if (!srcPort) {

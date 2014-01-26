@@ -7,4 +7,5 @@ module.config({
 
 module.process(function() {
     console.log(module.input('data'));
+    utils.notify(module.input("data"));
 });
