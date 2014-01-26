@@ -155,12 +155,14 @@
                 mod.fixedValue = elem.children('input').val();
             });
 
+            var ratio = stage.getStage().ratio;
+
             var dom = new G.DOMElement(elem.get(0));
-            dom.scaleX = dom.scaleY = 1 / stage.getStage().ratio;
+            dom.scaleX = dom.scaleY = 1 / ratio;
 
             dom.addEventListener('tick', function() {
-                dom.x = c.x / 2 + 12;
-                dom.y = (c.y + 0.5) / 2;
+                dom.x = c.x / ratio + 12;
+                dom.y = (c.y + 0.5) / ratio;
             });
             dom.mouseEnabled = false;
             c.getStage().addChild(dom);
