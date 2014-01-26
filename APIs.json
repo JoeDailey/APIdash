@@ -101,6 +101,28 @@
 		]
 	},
 	{
+		"API":"espn",
+		"functions":[
+			{
+				"route":"now",
+				"params":[
+					"leagues",//optional
+					"groups",//optional
+					"teams"// optional
+				]
+			},
+			{
+				"route":"top",
+				"params":[
+				]
+			},
+			{
+				"route":"popular",
+				"params":[
+				]
+			}
+	},
+	{
 		"API":"Rotten Tomatoes",
 		"functions":[
 			{
@@ -118,6 +140,37 @@
 				]
 			}
 		]
+	},
+	{
+		"API":"Twitter",
+		"functions":[
+			{
+				"route":"tweet",
+				"params":[
+					"message"
+				]
+			},
+			{
+				"route":"feed",
+				"params":[
+				]
+			},
+			{
+				"route":"user",
+				"params:[
+				]
+			},
+			{
+				"route":"search",
+				"params":[
+					"q"
+				]
+			},
+			{
+				"route":"sample",
+				"params":[
+				]
+			}
 	},
 	{
 		"API":"SendGrid",
