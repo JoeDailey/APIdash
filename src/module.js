@@ -147,6 +147,7 @@ var ModuleRunner = exports.ModuleRunner = function(modules) {
 ModuleRunner.prototype.run = function() {
 
     _.each(this.modules, function(mod) {
+        console.log(mod);
         mod.fired = false;
         _.each(mod.outputs, function(conn, k) {
             if (conn)
@@ -168,7 +169,7 @@ ModuleRunner.prototype.run = function() {
         });
 
         if (more) {
-            setTimeout(tick, 1000);
+            setTimeout(tick, 400);
             return;
         }
 
