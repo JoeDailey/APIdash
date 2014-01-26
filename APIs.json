@@ -325,6 +325,7 @@
 				"params":[
 				]
 			}
+		]
 	},
 	{
 		"API":"Wisper",
@@ -373,12 +374,18 @@
 		"API":"Reddit",
 		"functions":[
 			{
-				"route":"distance",//search query
+				"route":"subreddit",//search query
 				"params":[
-					"lat",
-					"long",
-					"limit"
+					"post_string"//optional
 				]
+			},
+			{
+				"route":"all",//search query
+				"params":[]
+			},
+			{
+				"route":"comment",//search query
+				"params":[]
 			}
 		]
 	}

@@ -1,6 +1,9 @@
 var $ = require('jQuery');
 
 var util = require('util');
+
+var reddit = require("rereddit");
+
 var dbox = require("dbox");
 var app = dbox.app({
     "app_key": "khf2wcgta1uewtj",
@@ -31,6 +34,7 @@ var twit = new twitter({
 });
 var express = require('express');
 var app = express();
+app.set('view engine', 'ejs');
 
 app.use('/static', express.static(__dirname + '/static'));
 app.use(express.bodyParser());
@@ -42,7 +46,7 @@ app.set('views', __dirname + '/views');
 app.engine('.html', require('ejs').__express);
 
 app.get('/', function(req, res) {
-    res.render('index.html');
+    res.render('index', {});
 });
 
 //Wunderground////////////////////////////////////////////////////////////////////////
@@ -279,6 +283,15 @@ app.post('/cnet/', function(req, res) {
     var url = 'http://developer.api.cnet.com/rest/v1.0/techProduct?productId=' + req.body.id + '&iod=none&viewType=json&partTag=43zw4zhq8adnxex35amrdbw4';
     GET(url, res);
 });
+//Reddit//////////////////////////////////////////////////////////////////////
+app.post('/reddit/comment', function(req, res){
+	reddit.login('BJ_Sargood', 'i ride the otter').end(function(err, user) {
+		reddit.comment(req.body.thing_id, req.body.text, function(err, success){
+			res.send(200, success);
+			console.log("wat");
+		});
+	});
+});
 
 
 var GET = function(url, res) {
@@ -314,7 +327,7 @@ var GETcallback = function(url, res, sucs) {
 }
 
 
-
+ 
 //URL bases///////////////////////////////////////////////////////////
 var wunderground = "http://api.wunderground.com/api/cdde5330c637ed40/";
 var rotten = "http://api.rottentomatoes.com/api/public/v1.0/movies";
