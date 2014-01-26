@@ -180,14 +180,8 @@
 				"params":[
 					"api_user",
 					"api_key",
-					[
-						"to",
-						"to"
-					],
-					[
-						"toname",
-						"toname"
-					],
+					"to",
+					"toname",
 					"subject",
 					"text",
 					"from"

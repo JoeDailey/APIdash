@@ -73,6 +73,10 @@ Module.prototype.run = function() {
     this.func();
 };
 
+Module.prototype.addXHR = function(xhr) {
+
+};
+
 Module.prototype.config = function(obj) {
     var self = this;
     self.name = obj.name;

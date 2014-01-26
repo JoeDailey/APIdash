@@ -101,7 +101,6 @@
         c.y = 50;
         stage.addChild(c);
         this.ports = [];
-        this.update();
 
         var self = this;
         this.module.onChange = function(portsChanged) {
@@ -110,6 +109,22 @@
             else
                 self.text.text = self.module.name;
         };
+
+        var del = this.delbtn = new G.Shape;
+        del.graphics.ss(3).s('#333').moveTo(0, 0).lineTo(8, 8)
+            .moveTo(8, 0).lineTo(0, 8).es();
+
+        var hit = new G.Shape;
+        hit.graphics.beginFill('#000').drawRect(-1, -1, 9, 9);
+        del.hitArea = hit;
+        del.alpha = 0.7;
+        del.on('mouseover', function() { del.alpha = 1; });
+        del.on('mouseout', function() { del.alpha = 0.7; });
+
+        del.x = connProtrude + bodyWidth - 13;
+        del.y = 5;
+
+        this.update();
     };
 
     BuilderModule.prototype.removeConnections = function() {
@@ -130,21 +145,7 @@
         var body = new G.Shape;
         c.addChild(body);
 
-        var del = this.delbtn = new G.Shape;
-        del.graphics.ss(3).s('#333').moveTo(0, 0).lineTo(8, 8)
-            .moveTo(8, 0).lineTo(0, 8).es();
-
-        var hit = new G.Shape;
-        hit.graphics.beginFill('#000').drawRect(-1, -1, 9, 9);
-        del.hitArea = hit;
-
-        del.alpha = 0.7;
-        del.on('mouseover', function() { del.alpha = 1; });
-        del.on('mouseout', function() { del.alpha = 0.7; });
-
-        c.addChild(del);
-        del.x = connProtrude + bodyWidth - 13;
-        del.y = 5;
+        c.addChild(this.delbtn);
 
         // Using drawing shortcuts
         // f = fill, ss = stroke size, s = begin stroke, r = rect
