@@ -4,67 +4,99 @@
 		"functions":[
 			{
 				"route":"alerts",
-				"params":"local"
+				"params":[
+					"local"
+				]
 			},
 			{
 				"route":"almanac",
-				"params":"local"
+				"params":[
+					"local"
+				]
 			},
 			{
 				"route":"astronomy",
-				"params":"local"
+				"params":[
+					"local"
+				]
 			},
 			{
 				"route":"currenthurricane",
-				"params":"local"
+				"params":[
+					"local"
+				]
 			},
 			{
 				"route":"forecast",
-				"params":"local"
+				"params":[
+					"local"
+				]
 			},
 			{
 				"route":"forecast10day",
-				"params":"local"
+				"params":[
+					"local"
+				]
 			},
 			{
 				"route":"geolookup",
-				"params":"local"
+				"params":[
+					"local"
+				]
 			},
 			{
 				"route":"history",
-				"params":"local"
+				"params":[
+					"local"
+				]
 			},
 			{
 				"route":"hourly",
-				"params":"local"
+				"params":[
+					"local"
+				]
 			},
 			{
 				"route":"hourly10day",
-				"params":"local"
+				"params":[
+					"local"
+				]
 			},
 			{
 				"route":"planner",
-				"params":"local"
+				"params":[
+					"local"
+				]
 			},
 			{
 				"route":"rawtide",
-				"params":"local"
+				"params":[
+					"local"
+				]
 			},
 			{
 				"route":"satellite",
-				"params":"local"
+				"params":[
+					"local"
+				]
 			},
 			{
 				"route":"tide",
-				"params":"local"
+				"params":[
+					"local"
+				]
 			},
 			{
 				"route":"webcams",
-				"params":"local"
+				"params":[
+					"local"
+				]
 			},
 			{
 				"route":"yesterday",
-				"params":"local"
+				"params":[
+					"local"
+				]
 			}
 		]
 	},
@@ -250,6 +282,7 @@
 			{
 				"route":"search",//search query
 				"params":[
+					"query",
 					"limit",
 					"feed_type"
 				]
